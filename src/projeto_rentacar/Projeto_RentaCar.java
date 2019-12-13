@@ -5,7 +5,9 @@
  */
 package projeto_rentacar;
 
+import java.awt.desktop.QuitEvent;
 import util.Consola;
+
 
 /**
  *
@@ -16,19 +18,54 @@ public class Projeto_RentaCar {
     /**
      * @param args the command line arguments
      */
+    
+    public static GestaoRentacar gr = new GestaoRentacar();
+    
     public static void main(String[] args) {
       
+        
         int op;
+        int op2;
         
 
         do {
             op = menu();
             switch (op) {
                 case 1:
-                        menu_tipo_veiculos();
+                    op2 = menu_tipo_veiculos();
+                    switch (op2) {
+                        case 1:
+                            adicionarTipodeVeiculo();
+                            break;
+                        case 2:
+                            if (gr.numeroTiposVeiculo() > 0) {
+                                System.out.println(gr.monstrarTipoVeiculos());   
+                            } else {
+                                System.out.println("\nAinda não foram inseridos tipos de veículo");
+                            }
+                            break;
+                    }
                     break;
                 case 2:
-                        menu_gestao_veiculos();
+                    op2 = menu_gestao_veiculos();
+                    switch (op2) {
+                        case 1:
+                            if (gr.numeroTiposVeiculo() > 0) {
+                                adicionarVeiculo();
+                            } else {
+                                System.out.println("\nAinda não foram inseridos tipos de veículo");
+                            }
+                            break;
+                    
+                            case 2:
+                            if (gr.numeroTiposVeiculo() > 0) {
+                                System.out.println(gr.monstrarTipoVeiculos());
+                            } else {
+                                System.out.println("\nAinda não foram inseridos tipos de veículo");
+                            }
+                            break;
+                    }
+
                     break;
                 case 3:
                         menu_gestao_funcionarios();
@@ -128,11 +165,80 @@ public class Projeto_RentaCar {
         return opcao;
   
     }
-        
-        
-        
-        
+        public static void adicionarTipodeVeiculo () {
     
+            String designacao; 
+            String descricao; 
+            double preco;
+            int pos;
+            
+
+        do {
+            designacao = Consola.lerString("Indique a designação do novo tipo de veículo : ");
+            pos = gr.pesquisarTipodeVeiculo(designacao);
+            if (pos != -1) {
+                System.out.println("\n\tA designação que inseriu já consta na base de dados !");
+            }
+        } while (pos != -1);
+        
+        descricao=Consola.lerString("\nIndique a descrição do tipo de veículo : ");
+        preco=Consola.lerDouble("Insique o valor do preço do veículo : ", 100, 50000);        //verificar preços
+        TipoVeiculo tipoveiculo = new TipoVeiculo(designacao, descricao, preco);
+        gr.adicionarTipoVeiculo(tipoveiculo);
+        
+    }
+        
+                public static void adicionarVeiculo () {
+                    
+                int n_portas;
+                int capacidade; 
+                String matricula; 
+                int nºpessoas; 
+                //TipoVeiculo tipoveiculo; 
+                String combustivel; 
+                int n_quilometros; 
+
+            int pos;
+            char resposta;
+            String designacao;
+            
+            
+            matricula=Consola.lerString("Indique o numero da matricula no seguinte formato XX-00_00: "); //validar
+            nºpessoas=Consola.lerInt("Indique o numero de pessoas possiveuis de transportar: ", 1, 9);
+                
+            System.out.println(gr.monstrarTipoVeiculos() );    // Alterara o to string se necessario
+            
+        do {
+            designacao = Consola.lerString("Indique a designação do tipo de veículo : ");
+            pos=gr.pesquisarTipodeVeiculo(designacao);
+            if (pos == -1) {
+                System.out.println("Não existe tipo de veículo");
+            }
+        } while (pos == -1);
+        
+            TipoVeiculo tipoveiculo = gr.obterTipoVeiculo(pos);
+            combustivel=Consola.lerString("Indique o tipo de combustivel");     //depois verificar se existe o tipo
+            n_quilometros=Consola.lerInt("Indique o numero de quilómetros do carro", 0, 9999999);            
+
+            resposta= Consola.lerChar("O veículo é ligeiro?", "sSnN");
+            resposta=Character.toUpperCase(resposta);
+            if (resposta=='S'){
+                n_portas=Consola.lerInt("Indique o número de portas do veículo: ", 1, 5);
+                capacidade=Consola.lerInt("Indique a capacidade da bagageira: ", 0, 5);
+
+                Veiculo veiculo = new VeiculoLigeiro(n_portas, capacidade, matricula, nºpessoas, tipoveiculo, combustivel, n_quilometros);
+                gr.adicionarVeiculo(veiculo);
+            }
+            else{
+                
+                Veiculo veiculo = new Veiculo(matricula, nºpessoas, tipoveiculo, combustivel, n_quilometros);
+                gr.adicionarVeiculo(veiculo);
+                
+                
+            }
+                }
+          
+
     
     
     

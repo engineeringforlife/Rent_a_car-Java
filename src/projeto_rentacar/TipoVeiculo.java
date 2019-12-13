@@ -18,6 +18,9 @@ public class TipoVeiculo {
     private String descricao;
     private double preco;
     private int numAlugueres;
+    /*Lista auxiliar para mostrar veículos por tipo de veiculo. Lista a percorre
+    Adicionar veiculo/ mostrar veiculo*/
+    
     private ArrayList<Veiculo> veiculos= new ArrayList<>();
 
     public TipoVeiculo(String designacao, String descricao, double preco) {
@@ -25,7 +28,30 @@ public class TipoVeiculo {
         this.descricao = descricao;
         this.preco = preco;
     }
+    
+    
+     public void adicionarVeiculo (Veiculo veiculo){
+        veiculos.add(veiculo);    
+    }
+    
+    //As validações sao feitas aqui ou na main?
+    public String monstrarVeiculos (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < veiculos.size(); i++) {
+            str.append(veiculos.get(i)).append("\n");
+        }
+        return str.toString();
+    }
 
+
+    public int numeroVeiculos (){
+        return veiculos.size();
+    }
+
+    
+    
+    
+    
     /**
      * @return the numero
      */

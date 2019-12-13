@@ -16,7 +16,7 @@ public class Condutor extends Pessoa{
     
     private String n_carta;
     private Calendar dataValCarta;
-    private ArrayList<Aluguer> alugueres = new ArrayList<>();
+    private ArrayList<Aluguer> alugueres = new ArrayList<>();   //Lista que armazena os alugueres de um determinado condutor. Nesta lista nao há numeração automatica
 
     public Condutor(String n_carta, Calendar dataValCarta, int NIF, String nome, String morada, int telefone) {
         super(NIF, nome, morada, telefone);

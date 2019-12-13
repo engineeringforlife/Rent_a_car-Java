@@ -199,26 +199,7 @@ public class Aluguer {
      */
 
     
-    public void adicionarOpcao(){
-        
-        
-        
-    }    
-    public void mostarOpcoes(){
-        
-        
-        
-    }      
-    public void pesquisarPorCampo(){
-        
-        
-        
-    }  
-    public void obterOpcao(){
-        
-        
-        
-    }  
+/*Adicionar metodos para Lista*/
     
     
 
