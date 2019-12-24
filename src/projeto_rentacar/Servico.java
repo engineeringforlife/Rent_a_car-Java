@@ -5,13 +5,14 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  *
  * @author 2181042
  */
-public class Servico {
+public class Servico implements Serializable{
     public static int numServicos;
     private int numero;
     private Aluguer aluguer;       

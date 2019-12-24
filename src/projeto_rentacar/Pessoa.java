@@ -5,11 +5,13 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 2181042
  */
-public class Pessoa {
+public class Pessoa implements Serializable{
     public static int numPessoas;
     protected int NIF;
     protected String nome;

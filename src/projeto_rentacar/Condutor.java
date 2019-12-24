@@ -63,6 +63,13 @@ public class Condutor extends Pessoa implements Serializable{
     public int numeroAlugueres (){
         return alugueres.size();
     }
+    public String monstrarAlugueres (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < alugueres.size(); i++) {
+            str.append(alugueres.get(i)).append("\n");
+        }
+        return str.toString();
+    }
     
     @Override
     public String toString() {

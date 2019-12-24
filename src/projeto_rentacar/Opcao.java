@@ -5,11 +5,13 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 2181042
  */
-public class Opcao {
+public class Opcao implements Serializable{
     public static int numOpcoes;
     private int numero; 
     private String nome;

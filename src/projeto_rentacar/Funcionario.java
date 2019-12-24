@@ -5,11 +5,13 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 2181042
  */
-public class Funcionario extends Pessoa{
+public class Funcionario extends Pessoa implements Serializable{
     public static int numFuncionarios;
     private String funcao;
 

@@ -5,11 +5,13 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 2181042
  */
-public class VeiculoLigeiro extends Veiculo{
+public class VeiculoLigeiro extends Veiculo implements Serializable{
     public static int numVeiculosLigeiros;
     private int n_portas;
     private int capacidade;

@@ -201,6 +201,14 @@ public class Aluguer implements Serializable {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+    
+    public double precoOpcoes(){
+        double preco=0;
+         for (int i = 0; i < opcoes.size(); i++) {
+               preco+=opcoes.get(i).getPreco();   
+            }
+          return preco;
+    }
 
     @Override
     public String toString() {

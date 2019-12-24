@@ -149,7 +149,6 @@ public class Projeto_RentaCar implements Constantes{
                             case 3:
                                 if(gr.numeroDeAlugueres()>0){
                                    alterarDataseLocais();
-                                   
                                }else{
                                    System.out.println("*Ainda não foram adicionados alugueres*");
                                }
@@ -704,25 +703,89 @@ public class Projeto_RentaCar implements Constantes{
 	}
         */
     
-    public static void alterarDataseLocais(){
+    public static void alterarDataseLocais() {
         int NIF;
         int pos;
+        int resposta;
+        boolean erro;
+        String data;
+        Calendar dataHoralevantamento = new GregorianCalendar();
+        Calendar dataHoraentrega = new GregorianCalendar();
+        String local;
+        long dias;
+        int numAluguer;
+        double preco;
         System.out.println("*Constam na base de dados os seguintes Condutores*");
         System.out.println(gr.monstrarCondutores());
-        do{
-            NIF= Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
-            pos=gr.pesquisarCondutorPorNIF(NIF);
-            if(pos==-1){
+        do {
+            NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
+            pos = gr.pesquisarCondutorPorNIF(NIF);
+            if (pos == -1) {
                 System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
             }
-        }while(pos==-1);
+        } while (pos == -1);
         Condutor c = gr.obterCondutor(pos);
-        System.out.println(c.obterAlugueres(c.numeroAlugueres()-1));
+
+        if (c.numeroAlugueres() > 0) {
+            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
+            System.out.println(c.monstrarAlugueres());
+            System.out.println("*Opções de alteração*\n1-Alterar data e hora de levantamento e entrega\n2-Alterar local de entrega e levantamento\n0-Voltar atras\n");
+            resposta = Consola.lerInt("Indique a opção que pretende alterar: ", 0, 4);
+            switch (resposta) {
+                case 1:
+                    do {
+                        do {
+                            erro = false;
+                            try {
+                                data = Consola.lerString("Indique a data e hora de levantamento: ");
+                                dataHoralevantamento.setTime(formatoHD.parse(data));
+
+                            } catch (ParseException e) {
+                                erro = true;
+                                System.err.println("Data de levantamento errada!");
+                            }
+                        } while (erro);
+
+                        do {
+                            erro = false;
+
+                            try {
+                                data = Consola.lerString("Indique a data e hora de entrega: ");
+                                dataHoraentrega.setTime(formatoHD.parse(data));
+
+                            } catch (ParseException e) {
+                                erro = true;
+                                System.err.println("Data de entrega errada!");
+                            }
+                        } while (erro);
+
+                        dias = gr.diferencaDias(dataHoralevantamento, dataHoraentrega);
+                        if (dias <= 0) {
+                            System.out.println("Deve inserir uma data de levantamento inferior à data de entrega");
+                        }
+                    } while (dias <= 0);
+                    c.obterAlugueres(numAluguer - 1).setDataHoraLevantamento(dataHoralevantamento);
+                    c.obterAlugueres(numAluguer - 1).setDataHoraEntrega(dataHoraentrega);
+                    preco=dias*((c.obterAlugueres(numAluguer - 1).getVeiculo().getTipoveiculo().getPreco())+(c.obterAlugueres(numAluguer - 1).precoOpcoes()));
+                    c.obterAlugueres(numAluguer - 1).setPreco(preco);
+
+                    break;
+                case 2:
+                    local = Consola.lerString("Indique o novo local de entrega");
+                    c.obterAlugueres(numAluguer - 1).setLocalEntrega(local);
+                    local = Consola.lerString("Indique o novo local de levantamento");
+                    c.obterAlugueres(numAluguer - 1).setLocalLevantamento(local);
+
+                    break;
+
+                case 0:
+                    break;
+            }
+        } else {
+            System.out.println("*o condutor que inseriu ainda não fez alugueres*");
+        }
     }
-
-    }
-
-
+}
             
             
     

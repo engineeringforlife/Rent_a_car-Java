@@ -369,7 +369,7 @@ public class GestaoRentacar {
     
         public void gravarFicheiro() {
         try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Dados_RH.dat"));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Dados.dat"));
             
             out.writeObject(tiposdeveiculo);
             out.writeObject(veiculos);
@@ -393,7 +393,7 @@ public class GestaoRentacar {
 
     public void lerFicheiro() {
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Dados_RH.dat"));
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Dados.dat"));
             
             tiposdeveiculo = (ArrayList<TipoVeiculo>) in.readObject();
             veiculos = (ArrayList<Veiculo>) in.readObject();
