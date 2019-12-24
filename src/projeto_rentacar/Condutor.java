@@ -18,6 +18,12 @@ public class Condutor extends Pessoa implements Serializable{
     private String n_carta;
     private Calendar dataValCarta;
     private ArrayList<Aluguer> alugueres = new ArrayList<>();   //Lista que armazena os alugueres de um determinado condutor. Nesta lista nao há numeração automatica
+    
+    private ArrayList<Aluguer> alugueresR = new ArrayList<>();
+    private ArrayList<Aluguer> alugueresI = new ArrayList<>();
+    private ArrayList<Aluguer> alugueresC = new ArrayList<>();
+    private ArrayList<Aluguer> alugueresT = new ArrayList<>();
+    
 
     public Condutor(String n_carta, Calendar dataValCarta, int NIF, String nome, String morada, int telefone) {
         super(NIF, nome, morada, telefone);
@@ -70,6 +76,105 @@ public class Condutor extends Pessoa implements Serializable{
         }
         return str.toString();
     }
+    
+    
+    
+    
+     public int numeroAlugueresRes(){
+       return alugueresR.size();
+    }
+    public void adicionarAlugueresRes(Aluguer aluguer){
+        alugueresR.add(aluguer);
+    }
+    public void RemoverAlugueresRes(Aluguer aluguer){
+        alugueresR.remove(aluguer);
+    }
+               
+        public String mostrarAlugueresRes (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < alugueresR.size(); i++) {
+            str.append("\n").append(alugueresR.get(i));
+        }
+        return str.toString();
+    }
+        public int pesquisarAlugueresRes (int numAluguer){
+        for (int i = 0; i < alugueresR.size(); i++) {
+            if(alugueresR.get(i).getNumero()==numAluguer){
+                return i; 
+            }
+        }
+        return -1;
+    }
+        public Aluguer obterAlugueresRes (int pos){
+        return alugueresR.get(pos);
+    }
+        
+        
+    public int numeroAlugueresIn(){
+        return alugueresI.size();
+    }
+    public void adicionarAlugueresIn(Aluguer aluguer){
+        alugueresI.add(aluguer);
+    }
+    
+    public void removerAlugueresIn(Aluguer aluguer){
+        alugueresI.remove(aluguer);
+    }
+    
+    public String mostrarAlugueresIn (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < alugueresI.size(); i++) {
+            str.append("\n").append(alugueresI.get(i));
+        }
+        return str.toString();   
+    }
+    
+    public Aluguer obterAlugueresIn (int pos){
+        return alugueresI.get(pos);
+    }
+    
+    public int numeroAlugueresCan(){
+       return alugueresC.size();
+    }
+    public void adicionarAlugueresCan(Aluguer aluguer){
+        alugueresC.add(aluguer);
+    }
+    
+    public void removerAlugueresCan(Aluguer aluguer){
+        alugueresC.remove(aluguer);
+    }
+    
+    public String mostrarAlugueresCan (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < alugueresC.size(); i++) {
+            str.append("\n").append(alugueresC.get(i));
+        }
+        return str.toString();   
+    }
+    
+    public int numeroAluguerester(){
+      return  alugueresT.size();
+    }
+    
+    public void adicionarAlugueresTer(Aluguer aluguer){
+        alugueresT.add(aluguer);
+    }
+    
+    public void removerAlugueresTer(Aluguer aluguer){
+        alugueresT.remove(aluguer);
+    }
+    
+    public String mostrarAlugueresTer (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < alugueresT.size(); i++) {
+            str.append("\n").append(alugueresT.get(i));
+        }
+        return str.toString();    
+    }
+    
+    
+    
+    
     
     @Override
     public String toString() {

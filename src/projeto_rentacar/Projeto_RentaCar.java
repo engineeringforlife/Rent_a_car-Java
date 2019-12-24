@@ -154,10 +154,25 @@ public class Projeto_RentaCar implements Constantes{
                                }
                                 break;
                             case 4:
+                                if(gr.numeroDeAlugueres()>0){
+                                   cancelarAluguer();
+                               }else{
+                                   System.out.println("*Ainda não foram adicionados alugueres*");
+                               }
                                 break;
                             case 5:
+                                if(gr.numeroDeAlugueres()>0){
+                                   levantarVeiculo();
+                               }else{
+                                   System.out.println("*Ainda não foram adicionados alugueres*");
+                               }
                                 break;
                             case 6:
+                                if(gr.numeroDeAlugueres()>0){
+                                   entregarVeiculo();
+                               }else{
+                                   System.out.println("*Ainda não foram adicionados alugueres*");
+                               }
                                 break;
   
                         }
@@ -620,6 +635,8 @@ public class Projeto_RentaCar implements Constantes{
         gr.adicionarAluguer(a);
         gr.adicionarAlugueresRes(a);
         c.adicionarAluguer(a);
+        c.adicionarAlugueresRes(a);
+        
         
         preco=preco*(double)dias;
 
@@ -726,9 +743,9 @@ public class Projeto_RentaCar implements Constantes{
         } while (pos == -1);
         Condutor c = gr.obterCondutor(pos);
 
-        if (c.numeroAlugueres() > 0) {
+        if (c.numeroAlugueresRes()> 0) {
             numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
-            System.out.println(c.monstrarAlugueres());
+            System.out.println(c.mostrarAlugueresRes());
             System.out.println("*Opções de alteração*\n1-Alterar data e hora de levantamento e entrega\n2-Alterar local de entrega e levantamento\n0-Voltar atras\n");
             resposta = Consola.lerInt("Indique a opção que pretende alterar: ", 0, 4);
             switch (resposta) {
@@ -782,11 +799,134 @@ public class Projeto_RentaCar implements Constantes{
                     break;
             }
         } else {
-            System.out.println("*o condutor que inseriu ainda não fez alugueres*");
+            System.out.println("*o condutor que inseriu não possui alugueres no estado Reservado*");
         }
     }
-}
+    
+    public static void cancelarAluguer(){
+        
+        int NIF;
+        int pos;
+        int numAluguer;
+        System.out.println("*Constam na base de dados os seguintes Condutores*");
+        System.out.println(gr.monstrarCondutores());
+        do {
+            NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
+            pos = gr.pesquisarCondutorPorNIF(NIF);
+            if (pos == -1) {
+                System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
+            }
+        } while (pos == -1);
+        
+        Condutor c = gr.obterCondutor(pos);
+
+        if (c.numeroAlugueresRes()> 0) {
+            System.out.println(c.mostrarAlugueresRes()); 
+            do{
+
+            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
+            pos=c.pesquisarAlugueresRes(numAluguer);
+            if(pos==-1){
+                System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
+            }
+            }while(pos==-1);
+            Aluguer a = c.obterAlugueresRes(pos);
             
+            c.adicionarAlugueresCan(a);
+            gr.adicionarAlugueresCan(a);
+            gr.RemoverAlugueresRes(a);
+            c.RemoverAlugueresRes(a);
+            
+            
+            
+        }else{   
+            System.out.println("O condutor escolhido não possui alugueres no estado reservado");
+        }
+    }
+        public static void levantarVeiculo (){
+            
+        int NIF;
+        int pos;
+        int numAluguer;
+        System.out.println("*Constam na base de dados os seguintes Condutores*");
+        System.out.println(gr.monstrarCondutores());
+        do {
+            NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
+            pos = gr.pesquisarCondutorPorNIF(NIF);
+            if (pos == -1) {
+                System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
+            }
+        } while (pos == -1);
+        
+        Condutor c = gr.obterCondutor(pos);
+
+        if (c.numeroAlugueresRes()> 0) {
+            System.out.println(c.mostrarAlugueresRes()); 
+            do{
+
+            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
+            pos=c.pesquisarAlugueresRes(numAluguer);
+            if(pos==-1){
+                System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
+            }
+            }while(pos==-1);
+            Aluguer a = c.obterAlugueresRes(pos);
+            
+            c.adicionarAlugueresIn(a);
+            gr.adicionarAlugueresIn(a);
+            gr.RemoverAlugueresRes(a);
+            c.RemoverAlugueresRes(a);
+
+        }else{   
+            System.out.println("O condutor escolhido não possui alugueres no estado reservado");
+        }
+            
+        }
+        
+                
+        public static void entregarVeiculo (){
+            
+        int NIF;
+        int pos;
+        int numAluguer;
+        System.out.println("*Constam na base de dados os seguintes Condutores*");
+        System.out.println(gr.monstrarCondutores());
+        do {
+            NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
+            pos = gr.pesquisarCondutorPorNIF(NIF);
+            if (pos == -1) {
+                System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
+            }
+        } while (pos == -1);
+        
+        Condutor c = gr.obterCondutor(pos);
+
+        if (c.numeroAlugueresRes()> 0) {
+            System.out.println(c.mostrarAlugueresIn()); 
+            do{
+
+            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
+            pos=c.pesquisarAlugueresRes(numAluguer);
+            if(pos==-1){
+                System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
+            }
+            }while(pos==-1);
+            Aluguer a = c.obterAlugueresIn(pos);
+            
+            c.adicionarAlugueresTer(a);
+            gr.adicionarAlugueresTer(a);
+            gr.removerAlugueresIn(a);
+            c.removerAlugueresIn(a);
+
+        }else{   
+            System.out.println("O condutor escolhido não possui alugueres no estado Iniciado");
+        }
+            
+        }
+
+    
+}
+    
             
     
     
