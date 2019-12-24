@@ -10,6 +10,7 @@ package projeto_rentacar;
  * @author 2181042
  */
 public class Opcao {
+    public static int numOpcoes;
     private int numero; 
     private String nome;
     private String descricao;       
@@ -19,6 +20,7 @@ public class Opcao {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
+        numOpcoes++;
     }
     
     
@@ -78,7 +80,18 @@ public class Opcao {
     public void setPreco(double preco) {
         this.preco = preco;
     }
-            
-            
+    
+    
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("");
+        str.append("\nNome: ").append(nome);
+        str.append("\nDescrição: ").append(descricao);
+        str.append("\nPreço: ").append(preco);
+        
+        return str.toString();
+        
+    }
             
 }

@@ -10,7 +10,7 @@ package projeto_rentacar;
  * @author 2181042
  */
 public class Pessoa {
-    
+    public static int numPessoas;
     protected int NIF;
     protected String nome;
     protected String morada;       
@@ -21,6 +21,7 @@ public class Pessoa {
         this.nome = nome;
         this.morada = morada;
         this.telefone = telefone;
+        numPessoas++;
     }
 
     /**
@@ -78,7 +79,20 @@ public class Pessoa {
     public void setTelefone(int telefone) {
         this.telefone = telefone;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str= new StringBuilder("");
+        str.append("\nNome: ").append(nome);
+        str.append("\nNIF: ").append(NIF);
+        str.append("\nMorada: ").append(morada);
+        str.append("\nTelefone: ").append(telefone);
+        return str.toString();
+    }
+    
+}
+
     
     
             
-}
+    

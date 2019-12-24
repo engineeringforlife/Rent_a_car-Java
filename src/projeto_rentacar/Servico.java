@@ -12,7 +12,7 @@ import java.util.Calendar;
  * @author 2181042
  */
 public class Servico {
-    
+    public static int numServicos;
     private int numero;
     private Aluguer aluguer;       
     private Calendar dataHoraServico;       
@@ -30,6 +30,7 @@ public class Servico {
         this.funcionario = funcionario;
         this.quilometros = quilometros;
         this.tipo = tipo;
+        numServicos++;
     }
 
     /**

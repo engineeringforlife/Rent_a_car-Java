@@ -10,7 +10,7 @@ package projeto_rentacar;
  * @author 2181042
  */
 public class Veiculo {
-    
+    public static int numVeiculos;
     protected String matricula;
     protected int nºpessoas;
     protected TipoVeiculo tipoveiculo;
@@ -23,6 +23,7 @@ public class Veiculo {
         this.tipoveiculo = tipoveiculo;
         this.combustivel = combustivel;
         this.n_quilometros = n_quilometros;
+        numVeiculos++;
     }
 
     /**
@@ -95,7 +96,18 @@ public class Veiculo {
         this.n_quilometros = n_quilometros;
     }
     
-    
+        
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("");
+        str.append("\nMatrícula: ").append(matricula);
+        str.append("\nNºpessoas: ").append(nºpessoas);
+        str.append("\nCombustível: ").append(combustivel);
+        str.append("\nNºquilómetros: ").append(n_quilometros);
+        
+        return str.toString();
+
+    }
     
     
 }

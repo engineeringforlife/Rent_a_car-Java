@@ -5,6 +5,7 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -12,8 +13,8 @@ import java.util.Calendar;
  *
  * @author 2181042
  */
-public class Condutor extends Pessoa{
-    
+public class Condutor extends Pessoa implements Serializable{
+    public static int numCondutores;
     private String n_carta;
     private Calendar dataValCarta;
     private ArrayList<Aluguer> alugueres = new ArrayList<>();   //Lista que armazena os alugueres de um determinado condutor. Nesta lista nao há numeração automatica
@@ -22,6 +23,7 @@ public class Condutor extends Pessoa{
         super(NIF, nome, morada, telefone);
         this.n_carta = n_carta;
         this.dataValCarta = dataValCarta;
+        numCondutores++;
     }
 
     /**
@@ -51,20 +53,33 @@ public class Condutor extends Pessoa{
     public void setDataValCarta(Calendar dataValCarta) {
         this.dataValCarta = dataValCarta;
     }
-
-    /**
-     * @return the alugueres
-     */
-    public ArrayList<Aluguer> getAlugueres() {
-        return alugueres;
+    public void adicionarAluguer(Aluguer aluguer){
+        alugueres.add(aluguer);
     }
 
-    /**
-     * @param alugueres the alugueres to set
-     */
-    public void setAlugueres(ArrayList<Aluguer> alugueres) {
-        this.alugueres = alugueres;
+    public Aluguer obterAlugueres (int pos){
+        return alugueres.get(pos);
     }
+    public int numeroAlugueres (){
+        return alugueres.size();
+    }
+    
+    @Override
+    public String toString() {
+        
+        StringBuilder str = new StringBuilder("");
+        str.append(super.toString());
+        str.append("\nNumero da carta de condução:: ").append(n_carta);
+        str.append("\nData de validade da carta: ").
+                append(dataValCarta.get(Calendar.DATE)).append("-").
+                append(dataValCarta.get(Calendar.MONTH)+1).append("-").
+                append(dataValCarta.get(Calendar.YEAR));
+        
+        return str.toString();
+                
+                
+    }
+    
     
     
     

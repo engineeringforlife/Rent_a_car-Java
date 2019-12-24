@@ -10,7 +10,7 @@ package projeto_rentacar;
  * @author 2181042
  */
 public class VeiculoLigeiro extends Veiculo{
-    
+    public static int numVeiculosLigeiros;
     private int n_portas;
     private int capacidade;
 
@@ -18,6 +18,7 @@ public class VeiculoLigeiro extends Veiculo{
         super(matricula, nºpessoas, tipoveiculo, combustivel, n_quilometros);
         this.n_portas = n_portas;
         this.capacidade = capacidade;
+        numVeiculosLigeiros++;
     }
 
     /**
@@ -48,6 +49,15 @@ public class VeiculoLigeiro extends Veiculo{
         this.capacidade = capacidade;
     }
     
+        public String toString() {
+        StringBuilder str = new StringBuilder("");
+        str.append(super.toString());
+        str.append("\nNºportas: ").append(n_portas);
+        str.append("\nCapacidade: ").append(capacidade);
+
+        return str.toString();
+
+    }
     
     
     

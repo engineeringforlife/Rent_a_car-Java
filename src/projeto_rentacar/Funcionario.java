@@ -10,11 +10,13 @@ package projeto_rentacar;
  * @author 2181042
  */
 public class Funcionario extends Pessoa{
+    public static int numFuncionarios;
     private String funcao;
 
     public Funcionario(String funcao, int NIF, String nome, String morada, int telefone) {
         super(NIF, nome, morada, telefone);
         this.funcao = funcao;
+        numFuncionarios++;
     }
 
 
@@ -30,6 +32,17 @@ public class Funcionario extends Pessoa{
      */
     public void setFuncao(String funcao) {
         this.funcao = funcao;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("");
+        str.append(super.toString());
+        str.append("\nFunção: ").append(funcao);
+        return str.toString();
+        
+        
+        
     }
     
     

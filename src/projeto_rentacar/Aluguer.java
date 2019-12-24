@@ -5,6 +5,7 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -12,10 +13,10 @@ import java.util.Calendar;
  *
  * @author 2181042
  */
-public class Aluguer {
-    
+public class Aluguer implements Serializable {
+    public static int numAlugueres;
     private int numero;
-    private int estado;       
+    private int estado=1;       
     private String localLevantamento;
     private String localEntrega;       
     private Calendar dataHoraLevantamento;
@@ -26,6 +27,7 @@ public class Aluguer {
     private String carataristicas;
     private double preco;
     private ArrayList<Opcao> opcoes = new ArrayList<>();
+    
 
     public Aluguer(String localLevantamento, String localEntrega, Calendar dataHoraLevantamento, Calendar dataHoraEntrega, Condutor condutor, Veiculo veiculo, int numPessoas, String carataristicas, double preco) {
 
@@ -38,6 +40,12 @@ public class Aluguer {
         this.numPessoas = numPessoas;
         this.carataristicas = carataristicas;
         this.preco = preco;
+        numAlugueres++;
+    }
+
+    
+    public void adicionarOpcao(Opcao op) {
+        opcoes.add(op);
     }
 
     /**
@@ -193,6 +201,27 @@ public class Aluguer {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("");
+        str.append("\nNumero : ").append(numero);
+        str.append("\nLocal de levantamento: ").append(localLevantamento);
+        str.append("\nLocal e entrega: ").append(localEntrega);
+        str.append("\nData e hora de levantamento: ").
+                append(dataHoraLevantamento.get(Calendar.DATE)).append("-").
+                append(dataHoraLevantamento.get(Calendar.MONTH)+1).append("-").
+                append(dataHoraLevantamento.get(Calendar.YEAR));
+        str.append("\nData e hora de Entrega: ").
+                append(dataHoraEntrega.get(Calendar.DATE)).append("-").
+                append(dataHoraEntrega.get(Calendar.MONTH)+1).append("-").
+                append(dataHoraEntrega.get(Calendar.YEAR));
+        str.append("\nCondutor: ").append(condutor);
+        str.append("\nVeiculo: ").append(veiculo);
+        
+        return str.toString();
+    }
+
 
     /**
      * @return the opcoes

@@ -5,14 +5,15 @@
  */
 package projeto_rentacar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author 2181042
  */
-public class TipoVeiculo {
-    
+public class TipoVeiculo implements Serializable{
+    public static int numTiposDeVeiculo;
     private int numero;
     private String designacao;
     private String descricao;
@@ -27,6 +28,7 @@ public class TipoVeiculo {
         this.designacao = designacao;
         this.descricao = descricao;
         this.preco = preco;
+        numTiposDeVeiculo++;
     }
     
     
@@ -136,7 +138,15 @@ public class TipoVeiculo {
         this.veiculos = veiculos;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder str= new StringBuilder("");
+        str.append("\nDesignação: ").append(designacao);
+        str.append("\nDescrição: ").append(descricao);
+        str.append("\nPreço: ").append(preco);
     
+        return str.toString();
+    }
 
     
     
