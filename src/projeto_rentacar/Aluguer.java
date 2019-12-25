@@ -15,6 +15,7 @@ import java.util.Calendar;
  */
 public class Aluguer implements Serializable {
     public static int numAlugueres;
+    
     private int numero;
     private int estado=1;       
     private String localLevantamento;

@@ -180,6 +180,22 @@ public class Projeto_RentaCar implements Constantes{
                                 
                     break;
                 case 7:
+                    op2 = menu_estatisticas();
+                    switch (op2) {
+                        case 1:
+                            System.out.println("A precentagem de reservas canveladas é de " +gr.percentagemReservasCanceladas() + "%");
+                            break;
+                        case 2:
+                            System.out.println("O numero de veículos alugados no momento é de " + gr.numeroAlugueresIn());
+                            break;
+                        case 3:
+                            System.out.println(gr.mostrarLucroAno());
+                            break;
+                        case 4:
+                            break;
+                        case 0:
+                            break;
+                    }
                     break;
                 case 0:
                         System.out.println("\nA sair da aplicação");
@@ -263,6 +279,18 @@ public class Projeto_RentaCar implements Constantes{
         System.out.println("6.Entregar veículo");
         System.out.println("0.Voltar atrás");
         int opcao = Consola.lerInt("Qual a opção: ", 0, 6);
+        return opcao;
+  
+    }
+         
+         public static int menu_estatisticas(){
+        
+        System.out.println("\n1.Percentagem de reservas canceladas");
+        System.out.println("2.Total de veículos alugados no momento");
+        System.out.println("3.Preço total em alugueres por ano");
+        System.out.println("4.Numero total de alugueres registados por mês num determinado ano");
+        System.out.println("0.Voltar atrás");
+        int opcao = Consola.lerInt("Qual a opção: ", 0, 4);
         return opcao;
   
     }
@@ -640,7 +668,26 @@ public class Projeto_RentaCar implements Constantes{
         
         preco=preco*(double)dias;
 
+
         a.setPreco(preco);
+        
+        
+        //o array começa a contar apartir de 2019(pos 0 = 2019)
+      
+        //int auxiliar =((dataHoraLevantamento.get(Calendar.YEAR))-2019) - gr.numeroAnoLucro();
+        
+        if(((dataHoraLevantamento.get(Calendar.YEAR))-2019) >= gr.numeroAnoLucro()){ 
+            int n_pos= ((dataHoraLevantamento.get(Calendar.YEAR))-2019) - gr.numeroAnoLucro();
+            Lucro l = new Lucro();
+            for (int i = 0; i <= n_pos; i++) {
+                gr.adicionarAnoLucro(l);
+            }
+            gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);    
+        }else{
+            gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);  
+        }
+        
+        
         
         
     }
@@ -923,6 +970,8 @@ public class Projeto_RentaCar implements Constantes{
         }
             
         }
+        
+
 
     
 }

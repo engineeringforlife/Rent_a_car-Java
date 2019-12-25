@@ -34,9 +34,39 @@ public class GestaoRentacar {
     private ArrayList<Aluguer> alugueresC = new ArrayList<>();
     private ArrayList<Aluguer> alugueresT = new ArrayList<>();
     
+    //private ArrayList<Double> lucroAno = new ArrayList<>();
+    private ArrayList<Lucro> lucro = new ArrayList<>();
+    
     //Extras:
     /*Ordenar elementosdas listas
     */
+    public void adicionarLucro(int ano, int mes, double lucro_aluguer){
+        
+
+        double lucro_anual=lucro.get(ano - 2019).getLucro_anual();
+        double lucro_mensal=lucro.get(ano - 2019).getLucro_mensal(mes);
+        
+        lucro.get(ano - 2019).setLucro_anual(lucro_anual + lucro_aluguer);
+        lucro.get(ano - 2019).setLucro_mensal(lucro_mensal + lucro_aluguer, mes);
+        
+    }
+    
+    public String mostrarLucroAno (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < lucro.size(); i++) {
+            str.append("\nO lucro no ano ").append(2019+i).append(" foi de ").append(lucro.get(i).getLucro_anual()).append(" €");
+        }
+        return str.toString();
+    }
+    public void adicionarAnoLucro(Lucro l){
+        lucro.add(l);
+    }
+    
+    public int numeroAnoLucro(){
+        return lucro.size();
+    }
+    
+    
     public int numeroAlugueresRes(){
        return alugueresR.size();
     }
@@ -366,6 +396,13 @@ public class GestaoRentacar {
 
     }
     
+    public double percentagemReservasCanceladas(){
+        double percentagem; 
+        percentagem=((double)alugueresC.size()/alugueres.size())*100;
+        return percentagem;
+    }
+    
+    
     
         public void gravarFicheiro() {
         try {
@@ -428,6 +465,10 @@ public class GestaoRentacar {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private Object append(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
             
            
