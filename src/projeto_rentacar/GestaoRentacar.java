@@ -35,7 +35,7 @@ public class GestaoRentacar {
     private ArrayList<Aluguer> alugueresT = new ArrayList<>();
     
     //private ArrayList<Double> lucroAno = new ArrayList<>();
-    private ArrayList<Lucro> lucro = new ArrayList<>();
+    private ArrayList<Estatisticas> estatisticas = new ArrayList<>();
     
     //Extras:
     /*Ordenar elementosdas listas
@@ -43,27 +43,32 @@ public class GestaoRentacar {
     public void adicionarLucro(int ano, int mes, double lucro_aluguer){
         
 
-        double lucro_anual=lucro.get(ano - 2019).getLucro_anual();
-        double lucro_mensal=lucro.get(ano - 2019).getLucro_mensal(mes);
+        double lucro_anual=estatisticas.get(ano - 2019).getLucro_anual();
+        //double lucro_mensal=lucro.get(ano - 2019).getLucro_mensal(mes);
+        double totalLucroAnual= lucro_anual + lucro_aluguer;
+        //double totalLucroMensal=lucro_mensal + lucro_aluguer;
         
-        lucro.get(ano - 2019).setLucro_anual(lucro_anual + lucro_aluguer);
-        lucro.get(ano - 2019).setLucro_mensal(lucro_mensal + lucro_aluguer, mes);
+        estatisticas.get(ano - 2019).setLucro_anual(totalLucroAnual);
+        //estatisticas.get(ano - 2019).setLucro_mensal(totalLucroMensal, mes);
+        estatisticas.get(ano - 2019).addNum_alugueres_mensal(mes);
         
     }
     
     public String mostrarLucroAno (){
         StringBuilder str = new StringBuilder("");
-        for (int i = 0; i < lucro.size(); i++) {
-            str.append("\nO lucro no ano ").append(2019+i).append(" foi de ").append(lucro.get(i).getLucro_anual()).append(" €");
+        for (int i = 0; i < estatisticas.size(); i++) {
+            str.append("\nO lucro no ano ").append(2019+i).append(" foi de ").append(estatisticas.get(i).getLucro_anual()).append(" €");
         }
         return str.toString();
     }
-    public void adicionarAnoLucro(Lucro l){
-        lucro.add(l);
+    
+        
+    public void adicionarAnoLucro(Estatisticas e){
+        estatisticas.add(e);
     }
     
     public int numeroAnoLucro(){
-        return lucro.size();
+        return estatisticas.size();
     }
     
     

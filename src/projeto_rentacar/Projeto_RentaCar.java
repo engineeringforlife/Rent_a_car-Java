@@ -28,6 +28,7 @@ public class Projeto_RentaCar implements Constantes{
      * @param args the command line arguments
      */
     
+    
     public static GestaoRentacar gr = new GestaoRentacar();
     public static SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); //verifica se a string tem o dado formato
     public static SimpleDateFormat formatoHD = new SimpleDateFormat("dd-MM-yyyy HH:mm"); //verifica se a string tem o dado formato
@@ -38,6 +39,7 @@ public class Projeto_RentaCar implements Constantes{
         int op;
         int op2;
         gr.lerFicheiro();
+        
         do {
             op = menu();
             switch (op) {
@@ -678,17 +680,14 @@ public class Projeto_RentaCar implements Constantes{
         
         if(((dataHoraLevantamento.get(Calendar.YEAR))-2019) >= gr.numeroAnoLucro()){ 
             int n_pos= ((dataHoraLevantamento.get(Calendar.YEAR))-2019) - gr.numeroAnoLucro();
-            Lucro l = new Lucro();
+            Estatisticas e = new Estatisticas();
             for (int i = 0; i <= n_pos; i++) {
-                gr.adicionarAnoLucro(l);
+                gr.adicionarAnoLucro(e);
             }
             gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);    
         }else{
             gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);  
         }
-        
-        
-        
         
     }
     
@@ -958,6 +957,7 @@ public class Projeto_RentaCar implements Constantes{
                 System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
             }
             }while(pos==-1);
+            
             Aluguer a = c.obterAlugueresIn(pos);
             
             c.adicionarAlugueresTer(a);

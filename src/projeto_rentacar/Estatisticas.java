@@ -11,14 +11,17 @@ import java.io.Serializable;
  *
  * @author 2181042
  */
-public class Lucro implements Serializable {
+public class Estatisticas implements Serializable {
     
     private double lucro_anual;
+    private int[] num_alugueres_mensal = new int[12];
     private double[] lucro_mensal = new double[12];
 
-    public Lucro() {
-        this.lucro_anual=0;
+    public Estatisticas() {
+        this.lucro_anual = 0;
     }
+
+
 
     /**
      * @return the lucro_anual
@@ -48,6 +51,21 @@ public class Lucro implements Serializable {
      */
     public void setLucro_mensal(double lucro_mensal, int index) {
         this.lucro_mensal[index] = lucro_mensal;
+    }
+
+    /**
+     * @param index
+     * @return the num_alugueres_mensal
+     */
+    public int getNum_alugueres_mensal(int index) {
+        return num_alugueres_mensal[index];
+    }
+
+    /**
+     * @param num_alugueres_mensal the num_alugueres_mensal to set
+     */
+    public void addNum_alugueres_mensal(int index) {
+        this.num_alugueres_mensal[index] ++;
     }
 
 
