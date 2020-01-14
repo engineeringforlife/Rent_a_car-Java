@@ -8,8 +8,9 @@ package projeto_rentacar;
 import java.io.Serializable;
 
 /**
- *
- * @author 2181042
+ *Classe onde cada aluguer pode ter mais de uma opção, é caracterizado por um 
+ * número único e sequêncial 
+ * @author 2181042/2172563
  */
 public class Opcao implements Serializable{
     public static int numOpcoes;
@@ -18,6 +19,12 @@ public class Opcao implements Serializable{
     private String descricao;       
     private double preco;       
 
+    /**
+     * Construtor do objeto de tipo opção
+     * @param nome- o nome associado ao aluguer
+     * @param descricao- descrição do aluguer
+     * @param preco-valor do aluguer
+     */
     public Opcao(String nome, String descricao, double preco) {
         this.nome = nome;
         this.descricao = descricao;
@@ -84,7 +91,10 @@ public class Opcao implements Serializable{
     }
     
     
-
+/**
+ *  Define um objeto
+ * @return str.toString();-retorna caracteres de string 
+ */
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("");

@@ -18,21 +18,27 @@ import java.util.Date;
 
 
 /**
- *
- * @author 2181042
+ *Classe main ou principal
+ * @author 2181042/2172563
  */
 public class Projeto_RentaCar implements Constantes{
     
 
     /**
-     * @param args the command line arguments
      */
     
+    /**
+     * Declaração da classe gestão e verificação da string 
+     */
     
     public static GestaoRentacar gr = new GestaoRentacar();
     public static SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy"); //verifica se a string tem o dado formato
     public static SimpleDateFormat formatoHD = new SimpleDateFormat("dd-MM-yyyy HH:mm"); //verifica se a string tem o dado formato
     
+    /**
+     * Escolha de opções na realização do aluguer
+     * @param args 
+     */
     public static void main(String[] args) {
       
         
@@ -296,6 +302,9 @@ public class Projeto_RentaCar implements Constantes{
         return opcao;
   
     }
+         /**
+          * Adiciona um tipo de veículo a um aluguer
+          */
         public static void adicionarTipodeVeiculo () {
     
             String designacao; 
@@ -318,7 +327,9 @@ public class Projeto_RentaCar implements Constantes{
         gr.adicionarTipoVeiculo(tipoveiculo);
         
     }
-        
+        /**
+         * Adiciona um veículo a um aluguer
+         */
                 public static void adicionarVeiculo () {
                     
                 int n_portas;
@@ -386,7 +397,9 @@ public class Projeto_RentaCar implements Constantes{
             }
             
                 }
-                
+      /**
+       * Consulta o aluguer por tipo de veículo na classe gestão
+       */          
     public static void consultarPorTipoVeiculo() {
 
         String designacao;
@@ -414,7 +427,10 @@ public class Projeto_RentaCar implements Constantes{
         
                     
     }
-    
+    /**
+     * Adiciona uma pessoa a um aluguer
+     * @param pessoa  a que está associada a um aluguer
+     */
     public static void adicionarPessoa(char pessoa) {
 
         int NIF;
@@ -481,7 +497,9 @@ public class Projeto_RentaCar implements Constantes{
 
     }
     
-    
+    /**
+     * Consulta um condutor se está associado a um aluguer por nif
+     */
     public static void consultarCondutor() {
     
         int NIF, pos;
@@ -501,7 +519,9 @@ public class Projeto_RentaCar implements Constantes{
         
 
 }
-    
+    /**
+     * Adiciona uma opção a um aluguer
+     */
     public static void adicionarOpAluguer (){
         
         String nome = Consola.lerString("Insira o nome da opção de aluguer: ");
@@ -513,6 +533,9 @@ public class Projeto_RentaCar implements Constantes{
             gr.adicionarOpcao(op);
 
 }
+    /**
+     * Adiciona um aluguer a um condutor
+     */
     public static void adicionarAluguer (){
         String data;
         boolean erro;
@@ -691,6 +714,9 @@ public class Projeto_RentaCar implements Constantes{
         
     }
     
+    /**
+     * Consulta de alugueres por estado, reservado, iniciado, cancelado ou terminado
+     */
     
     public static void consultarAlugueresporEstado(){
         System.out.println("Indique qual o estado pela qual pretende pesquisar alugueres");
@@ -765,7 +791,9 @@ public class Projeto_RentaCar implements Constantes{
 
 	}
         */
-    
+    /**
+     * Altera aas datas e os locais de entrega do veículo
+     */
     public static void alterarDataseLocais() {
         int NIF;
         int pos;
@@ -848,7 +876,9 @@ public class Projeto_RentaCar implements Constantes{
             System.out.println("*o condutor que inseriu não possui alugueres no estado Reservado*");
         }
     }
-    
+    /**
+     * Cancela um aluguer num condutor
+     */
     public static void cancelarAluguer(){
         
         int NIF;
@@ -889,6 +919,10 @@ public class Projeto_RentaCar implements Constantes{
             System.out.println("O condutor escolhido não possui alugueres no estado reservado");
         }
     }
+    
+    /**
+     * Levantamento do veículo após a reserva
+     */
         public static void levantarVeiculo (){
             
         int NIF;
@@ -929,7 +963,9 @@ public class Projeto_RentaCar implements Constantes{
             
         }
         
-                
+       /**
+        * Entrega do veículo após o término do aluguer
+        */     
         public static void entregarVeiculo (){
             
         int NIF;

@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- *
- * @author 2181042
+ *Classe caracterizada por um númeroo inserido automaticamente e associado 
+ * a um tipo de veículo
+ * @author 2181042/2172563
  */
 public class TipoVeiculo implements Serializable{
     public static int numTiposDeVeiculo;
@@ -19,10 +20,20 @@ public class TipoVeiculo implements Serializable{
     private String descricao;
     private double preco;
     private int numAlugueres;
-    /*Lista auxiliar para mostrar veículos por tipo de veiculo. Lista a percorre
-    Adicionar veiculo/ mostrar veiculo*/
     
+    /**
+     *Lista auxiliar para mostrar veículos por tipo de veiculo. Lista a percorre 
+     * Adicionar veiculo/ mostrar veiculo
+     */
     private ArrayList<Veiculo> veiculos= new ArrayList<>();
+    
+    /**
+     * Construtor do objeto do tipo tipo de veículo, associado a um 
+     * tipo de veículo
+     * @param designacao-se o vceículo é suv ou automático
+     * @param descricao- a marca ou modelo do veículo
+     * @param preco-preço de aluguer associado ao veículo
+     */
 
     public TipoVeiculo(String designacao, String descricao, double preco) {
         this.designacao = designacao;
@@ -31,12 +42,18 @@ public class TipoVeiculo implements Serializable{
         numTiposDeVeiculo++;
     }
     
-    
+    /**
+     * Adiciona veículo a lista de veículos
+     * @param veiculo- onde são adicionados os veículos 
+     */
      public void adicionarVeiculo (Veiculo veiculo){
         veiculos.add(veiculo);    
     }
     
-    //As validações sao feitas aqui ou na main?
+    /**
+     * Mostra veículos associados a um tipo de veículo
+     * @return str.toString();
+     */
     public String monstrarVeiculos (){
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < veiculos.size(); i++) {
@@ -45,7 +62,10 @@ public class TipoVeiculo implements Serializable{
         return str.toString();
     }
 
-
+/**
+ * Lista número de veículos na lista de tipo de veículos
+ * @return veiculos.size();- retorna a lista do tamanho dos veículos
+ */
     public int numeroVeiculos (){
         return veiculos.size();
     }
@@ -137,7 +157,10 @@ public class TipoVeiculo implements Serializable{
     public void setVeiculos(ArrayList<Veiculo> veiculos) {
         this.veiculos = veiculos;
     }
-    
+    /**
+     *  Define um objeto
+     * @return str.toString();-retorna caracteres de string
+     */
     @Override
     public String toString() {
         StringBuilder str= new StringBuilder("");

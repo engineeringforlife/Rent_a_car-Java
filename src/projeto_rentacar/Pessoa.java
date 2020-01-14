@@ -8,8 +8,9 @@ package projeto_rentacar;
 import java.io.Serializable;
 
 /**
- *
- * @author 2181042
+ *Classe que está associado a um aluguer, contém um funcionário e condutor 
+ *que realizará um aluguer,é caracterizado por um número de identificação único
+ * @author 2181042/2172563
  */
 public class Pessoa implements Serializable{
     public static int numPessoas;
@@ -17,6 +18,14 @@ public class Pessoa implements Serializable{
     protected String nome;
     protected String morada;       
     protected int telefone;
+    
+    /**
+     * Construtor que instancia a classe pessoa
+     * @param NIF- número de identificação único que caracteriza uma pessoa
+     * @param nome-usado para tratar de uma pessoa em específica
+     * @param morada- local onde pode ser encontrado ou habita
+     * @param telefone- número de contacto da pessoa
+     */
 
     public Pessoa(int NIF, String nome, String morada, int telefone) {
         this.NIF = NIF;
@@ -81,7 +90,10 @@ public class Pessoa implements Serializable{
     public void setTelefone(int telefone) {
         this.telefone = telefone;
     }
-
+/**
+ * Define um objeto
+ * @return str.toString();-retorna caracteres de string 
+ */
     @Override
     public String toString() {
         StringBuilder str= new StringBuilder("");

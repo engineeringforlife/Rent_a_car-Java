@@ -7,7 +7,7 @@ package projeto_rentacar;
 
 /**
  *
- * @author 2181042
+ * @author 2181042/2172563
  */
 public interface Constantes {
     char FUNCIONARIO=0;

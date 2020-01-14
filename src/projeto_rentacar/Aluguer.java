@@ -10,12 +10,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- *
- * @author 2181042
+ *Classe fundamental para efetuar o registo de um aluguer
+ * @author 2181042/272563
  */
 public class Aluguer implements Serializable {
     public static int numAlugueres;
-    
     private int numero;
     private int estado=1;       
     private String localLevantamento;
@@ -29,7 +28,18 @@ public class Aluguer implements Serializable {
     private double preco;
     private ArrayList<Opcao> opcoes = new ArrayList<>();
     
-
+/**
+ * Responsável pelo objeto do tipo aluguer, ou instancia a classe aluguer
+ * @param localLevantamento- o lugar definido para o cliente levantar o veículo depois do reserva do mesmo
+ * @param localEntrega- local definido para entregar o veículo depois de alugado
+ * @param dataHoraLevantamento- o horario definido para ser entregue o veículo
+ * @param dataHoraEntrega- horario definido para entrega do veículo alugado 
+ * @param condutor- a pessoa que reservou ou alugou o veículo
+ * @param veiculo- a variável responsável pelo aluguer
+ * @param numPessoas- capacidade máxima do veículo
+ * @param carataristicas- característica do aluguer
+ * @param preco- valor a pagar pelo empréstimo do veículo
+ */
     public Aluguer(String localLevantamento, String localEntrega, Calendar dataHoraLevantamento, Calendar dataHoraEntrega, Condutor condutor, Veiculo veiculo, int numPessoas, String carataristicas, double preco) {
 
         this.localLevantamento = localLevantamento;
@@ -44,7 +54,10 @@ public class Aluguer implements Serializable {
         numAlugueres++;
     }
 
-    
+    /**
+     * adiciona opcao a lista op
+     * @param op- lista onte contém todas as opções do aluguer
+     */
     public void adicionarOpcao(Opcao op) {
         opcoes.add(op);
     }
@@ -210,6 +223,10 @@ public class Aluguer implements Serializable {
             }
           return preco;
     }
+    /**
+     * Define um objeto
+     * @return str.toString();-retorna caracteres de string
+     */
 
     @Override
     public String toString() {

@@ -8,8 +8,9 @@ package projeto_rentacar;
 import java.io.Serializable;
 
 /**
- *
- * @author 2181042
+ *Classe que faz a estatística de um veículo durante um aluguer, ou seja, faz 
+ * a estatística de quantos alugueres ja foram efetuados pelo ou pelos veículos
+ * @author 2181042/2172563
  */
 public class Estatisticas implements Serializable {
     
@@ -17,52 +18,43 @@ public class Estatisticas implements Serializable {
     private int[] num_alugueres_mensal = new int[12];
     private double[] lucro_mensal = new double[12];
 
+    /**
+     * Construtor da classe de tipo estatística
+     */
     public Estatisticas() {
         this.lucro_anual = 0;
     }
 
 
 
-    /**
-     * @return the lucro_anual
-     */
+    
     public double getLucro_anual() {
         return lucro_anual;
     }
 
-    /**
-     * @param lucro_anual the lucro_anual to set
-     */
+    
     public void setLucro_anual(double lucro_anual) {
         this.lucro_anual = lucro_anual;
     }
 
-    /**
-     * @param index
-     * @return the lucro_mensal
-     */
+    
     public double getLucro_mensal(int index) {
         return lucro_mensal[index];
     }
 
-    /**
-     * @param lucro_mensal the lucro_mensal to set
-     * @param index
-     */
+    
     public void setLucro_mensal(double lucro_mensal, int index) {
         this.lucro_mensal[index] = lucro_mensal;
     }
 
-    /**
-     * @param index
-     * @return the num_alugueres_mensal
-     */
+   
     public int getNum_alugueres_mensal(int index) {
         return num_alugueres_mensal[index];
     }
 
     /**
-     * @param num_alugueres_mensal the num_alugueres_mensal to set
+     * Adiciona a numero de alugueres a lista index
+     * @param index 
      */
     public void addNum_alugueres_mensal(int index) {
         this.num_alugueres_mensal[index] ++;

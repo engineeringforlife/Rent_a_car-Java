@@ -8,8 +8,9 @@ package projeto_rentacar;
 import java.io.Serializable;
 
 /**
- *
- * @author 2181042
+ *Variável em estudo, onde cada veículo será associado um tipo de veículo, o 
+ * preço que corresponde ao preço de aluguer de um veículo por dia
+ * @author 2181042/2172563
  */
 public class Veiculo implements Serializable{
     public static int numVeiculos;
@@ -19,6 +20,14 @@ public class Veiculo implements Serializable{
     protected String combustivel;       
     protected int n_quilometros;
 
+    /**
+     * Construtor que instancia a classe do tipo veículo
+     * @param matricula- número único que caracteriza o veículo
+     * @param nºpessoas- ocupação máxima do veículo
+     * @param tipoveiculo-o tipo de veículo a ser alugado
+     * @param combustivel-o tipo de combústivel do veículo a ser alugado
+     * @param n_quilometros- número de quilómetros indicado no momento do aluguer
+     */
     public Veiculo(String matricula, int nºpessoas, TipoVeiculo tipoveiculo, String combustivel, int n_quilometros) {
         this.matricula = matricula;
         this.nºpessoas = nºpessoas;
@@ -29,6 +38,7 @@ public class Veiculo implements Serializable{
     }
 
     /**
+     * Recebe o número de matrícula do Veículo
      * @return the matricula
      */
     public String getMatricula() {
@@ -98,7 +108,10 @@ public class Veiculo implements Serializable{
         this.n_quilometros = n_quilometros;
     }
     
-        
+    /**
+     *  Define um objeto
+     * @return str.toString();-retorna caracteres de string
+     */    
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("");

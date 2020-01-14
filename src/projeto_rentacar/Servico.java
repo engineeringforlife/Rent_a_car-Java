@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 /**
- *
- * @author 2181042
+ *Classe caracterizada por um número único e sequencial,indica a reserva 
+ * associada, a data da reserva e as condições do veículo
+ * @author 2181042/2172563
  */
 public class Servico implements Serializable{
     public static int numServicos;
@@ -23,6 +24,17 @@ public class Servico implements Serializable{
     private int quilometros;
     private char tipo;
 
+    /**
+     * Construtor da do objeto do tipo serviço
+     * @param aluguer-associado a um condutor com carta de condução válida
+     * @param dataHoraServico- data e hora que foi efectuada a reserva
+     * @param CondicoesVeiculo- se o veículo tem alguma avaria ou não 
+     * para ser alugado
+     * @param nivelReserva- combustível no momento do aluguer
+     * @param funcionario-funcionário que efectou a aluguer
+     * @param quilometros- quilómetros do veículo no momento do aluguer
+     * @param tipo-levantar ou entregar o veículo
+     */
     public Servico(Aluguer aluguer, Calendar dataHoraServico, String CondicoesVeiculo, int nivelReserva, Funcionario funcionario, int quilometros, char tipo) {
         this.aluguer = aluguer;
         this.dataHoraServico = dataHoraServico;
