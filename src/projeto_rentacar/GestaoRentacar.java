@@ -13,6 +13,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import static projeto_rentacar.Projeto_RentaCar.gr;
+
+  
 
 /**
  *
@@ -27,6 +31,7 @@ public class GestaoRentacar {
     private ArrayList<Pessoa> pessoas = new ArrayList<>();
     private ArrayList<Servico> servicos = new ArrayList<>();
     private ArrayList<Opcao> opcoes = new ArrayList<>();
+    
     private ArrayList<Aluguer> alugueres = new ArrayList<>();
     
     private ArrayList<Aluguer> alugueresR = new ArrayList<>();
@@ -36,23 +41,43 @@ public class GestaoRentacar {
     
     //private ArrayList<Double> lucroAno = new ArrayList<>();
     private ArrayList<Estatisticas> estatisticas = new ArrayList<>();
+
     
     //Extras:
     /*Ordenar elementosdas listas
     */
+    
+    
+    
+
+    
+    
+        public String mostrarAlugueresMensalDec(int ano) {
+
+        OrdenaAlugueresMensal on = new OrdenaAlugueresMensal();
+        Collections.sort(estatisticas.get(ano - 2019).getAlugueres_mensal(), on);
+        return estatisticas.get(ano - 2019).mostrarAlugueresMensal();
+
+    }
+    
+
+    
     public void adicionarLucro(int ano, int mes, double lucro_aluguer){
         
+        
 
-        double lucro_anual=estatisticas.get(ano - 2019).getLucro_anual();
-        //double lucro_mensal=lucro.get(ano - 2019).getLucro_mensal(mes);
-        double totalLucroAnual= lucro_anual + lucro_aluguer;
-        //double totalLucroMensal=lucro_mensal + lucro_aluguer;
+        double lucro_anual = estatisticas.get(ano - 2019).getLucro_anual();
+        double lucro_mensal=estatisticas.get(ano - 2019).getLucro_mensal(mes+1);
+        
+        double totalLucroAnual = lucro_anual + lucro_aluguer;
+        double totalLucroMensal = lucro_mensal + lucro_aluguer;
         
         estatisticas.get(ano - 2019).setLucro_anual(totalLucroAnual);
-        //estatisticas.get(ano - 2019).setLucro_mensal(totalLucroMensal, mes);
-        estatisticas.get(ano - 2019).addNum_alugueres_mensal(mes);
+        estatisticas.get(ano - 2019).setLucro_mensal(totalLucroMensal, mes+1);
+        estatisticas.get(ano - 2019).addNum_alugueres_mensal(mes+1);
         
     }
+    
     
     public String mostrarLucroAno (){
         StringBuilder str = new StringBuilder("");
@@ -149,6 +174,22 @@ public class GestaoRentacar {
     }
     
     
+    public String mostrarAlugueresMes (int ano){
+        
+        
+        StringBuilder str = new StringBuilder("");
+       
+        str.append("Para o ano ").append(ano).append(" constam os seguintes dados: ");
+
+        
+        for (int i = 11; i>=0; i--) { 
+            str.append("\n\nMês ").append(i+1).append("\nNumero de alugueres : ").append(estatisticas.get(ano-2019).getNum_alugueres_mensal(i))
+                    .append("\nLucro : ").append(estatisticas.get(ano-2019).getLucro_mensal(i)).append("€");
+                
+        }
+        return str.toString();
+    }    
+    
     public void adicionarVeiculo (Veiculo veiculo){
         veiculos.add(veiculo);    
     }
@@ -181,6 +222,17 @@ public class GestaoRentacar {
     public void adicionarTipoVeiculo (TipoVeiculo tipoveiculo){
           tipoveiculo.setNumero(tiposdeveiculo.size()+1);
           tiposdeveiculo.add(tipoveiculo);     
+    }
+    
+        public String monstrarNumVeiculosPorTipo (){
+        StringBuilder str = new StringBuilder("");
+        str.append("\n-------------------------------------------\n");
+            str.append("Tipo de veículo").append("\t\t").append("Número de veículos");
+        for (int i = 0; i < tiposdeveiculo.size(); i++) {
+            str.append("\n").append(tiposdeveiculo.get(i).getDesignacao()).append("\t\t").append(" - ").append("\t").append(tiposdeveiculo.get(i).numeroVeiculos());
+        }
+            str.append("\n-------------------------------------------");
+        return str.toString();
     }
     
     public String monstrarTipoVeiculos (){
@@ -225,8 +277,11 @@ public class GestaoRentacar {
     public String monstrarCondutores (){
         
         StringBuilder str = new StringBuilder("");
+        str.append("Lista de consutores: \n");
         for (int i = 0; i < condutores.size(); i++) {
-            str.append(condutores.get(i)).append("\n");
+            str.append("\n-------------------------------------\n")
+                    .append("\nNome: ").append(condutores.get(i).getNome())
+                    .append("\nNIF:").append(condutores.get(i).getNIF());
         }
         return str.toString();
         
@@ -259,8 +314,10 @@ public class GestaoRentacar {
     
         public int pesquisarPessoaPorNIF (int NIF){
         for (int i = 0; i < pessoas.size(); i++) {
-                if(pessoas.get(i).getNIF()==NIF)
+                if(pessoas.get(i).getNIF()==NIF){
                     return i;   
+                }
+
             }
             return -1;      //retorna -1 se não encontrar pessoas com o mesmo nif
     }
@@ -280,18 +337,26 @@ public class GestaoRentacar {
     
     public String monstrarFuncionarios (){
         StringBuilder str = new StringBuilder("");
+        str.append("Lista de consutores: \n");
         for (int i = 0; i < funcionarios.size(); i++) {
-            str.append(funcionarios.get(i)).append("\n");
+            str.append("\n-------------------------------------\n")
+                    .append("\nNome: ").append(funcionarios.get(i).getNome())
+                    .append("\nNIF:").append(funcionarios.get(i).getNIF());
         }
         return str.toString();
     }
         
-    public void pesquisarFuncionarioPor (){
-        
+    public int pesquisarFuncionarioPorNIF (int NIF){
+         for (int i = 0; i < funcionarios.size(); i++) {
+                if(funcionarios.get(i).getNIF()==NIF){
+                    return i;  
+                }    
+            }
+            return -1;      //retorna -1 se não encontrar pessoas com o mesmo nif
     }
             
-    public void obterFuncionarioPor (){
-        
+    public Funcionario obterFuncionario (int pos){
+        return funcionarios.get(pos);
     }
                 
     public int numeroDeFuncionarios (){
@@ -314,11 +379,11 @@ public class GestaoRentacar {
         
     }
                 
-    public void numeroDeServicos (){
-        
-    }
+
     public void adicionarOpcao (Opcao op){
+        op.setNumero(opcoes.size()+1);
         opcoes.add(op);
+        
     }
     
     public String monstrarOpcoes (){
@@ -371,9 +436,54 @@ public class GestaoRentacar {
     public Aluguer obterAlugueres (int pos){
         return alugueres.get(pos);
     }
-                
+    
+        public void adicionarServico(Servico s){
+        servicos.add(s);
+        servicos.get(numeroDeServicos()-1).setNumero(numeroDeServicos());
+    }
+        public int numeroDeServicos (){
+        return servicos.size();
+    }
 
     
+    
+        public boolean verificaDisponibilidade(Calendar dataLevantamento, Calendar dataEntrega, Veiculo veiculo){
+            for (int i = 0; i < veiculo.numeroAlugueresRes(); i++) {
+                if (dataEntrega.after(veiculo.alugueresR.get(i).getDataHoraEntrega()) && dataEntrega.before(veiculo.alugueresR.get(i).getDataHoraLevantamento())){    //verifica se a data inserida esta no intervalo de qualquer aluguer
+                    return false;     
+                }
+                if (dataLevantamento.after(veiculo.alugueresR.get(i).getDataHoraEntrega()) && dataLevantamento.before(veiculo.alugueresR.get(i).getDataHoraLevantamento())){    //verifica se a data inserida esta no intervalo de qualquer aluguer
+                    return false;     
+                }
+                if(veiculo.alugueresR.get(i).getDataHoraEntrega().after(dataLevantamento) && veiculo.alugueresR.get(i).getDataHoraEntrega().before(dataEntrega) ){  //verifiva se existe algum aluguer entre as datas
+                   return false; 
+                } 
+            }    
+                   return true; 
+        }
+    /*    
+    public String mostraVeiculosDisponiveis(Calendar dataLevantamento, Calendar dataEntrega) {
+        StringBuilder str = new StringBuilder("");
+        str.append(monstrarVeiculos());
+
+        for (int i = 0; i < numeroVeiculos(); i++) {
+            for (int j = 0; j < veiculos.get(i).numeroAlugueresRes(); j++) {
+                if (dataEntrega.after(veiculos.get(i).alugueresR.get(j).getDataHoraEntrega()) && dataEntrega.before(veiculos.get(i).alugueresR.get(j).getDataHoraLevantamento())) {    //verifica se a data inserida esta no intervalo de qualquer aluguer
+                if (dataLevantamento.after(veiculos.get(i).alugueresR.get(j).getDataHoraEntrega()) && dataLevantamento.before(veiculos.get(i).alugueresR.get(j).getDataHoraLevantamento())) {    //verifica se a data inserida esta no intervalo de qualquer aluguer
+            }
+            }else{
+                    
+                }
+            
+            if (veiculos.get(i).getDataHoraEntrega().after(dataLevantamento) && veiculo.alugueresR.get(i).getDataHoraEntrega().before(dataEntrega)) {  //verifiva se existe algum aluguer entre as datas
+                return false;
+            }
+            }
+
+        }
+    }
+
+    */
         public long diferencaDias(Calendar dataIni, Calendar dataFim) {
         long difDias = (dataFim.getTimeInMillis() - dataIni.getTimeInMillis()) / (24 * 60 * 60 * 1000);
 
@@ -407,7 +517,37 @@ public class GestaoRentacar {
         return percentagem;
     }
     
-    
+    /*
+    public String verificaDatas(Calendar dataLevantamento, Calendar dataEntrega) {
+        double dias, dias1, dias2, dias3;
+        StringBuilder str = new StringBuilder("");
+        
+        for (int j = 0; j < veiculos.size(); j++) {
+            Veiculo v = obterVeiculo(j);
+        for (int i = 0; i < v.numeroDeAlugueres(); i++) {
+            Aluguer a = v.obterAlugueres(i);
+            dias = diferencaDias(dataEntrega, a.getDataHoraLevantamento());     
+            dias1 = diferencaDias(dataEntrega, a.getDataHoraEntrega());
+            dias2 = diferencaDias(dataLevantamento, a.getDataHoraLevantamento());
+            dias3 = diferencaDias(dataLevantamento, a.getDataHoraEntrega());
+
+            if (dias > 0 && dias1 < 0) {        //Se verdadeiro, sifnifica que a data de entrega não esta compreendida entre a data de entrega e data de levantamento de um dado aluguer para o veículo
+                if (dias2 > 0 && dias3 < 0) {   //Se verdadeiro, sifnifica que a data de levantamento não esta compreendida entre a data de entrega e data de levantamento de um dado aluguer para o veículo
+                    System.out.println("o veiculo x não da");
+                } else {
+                    System.out.println("aqui nao da");
+                }
+            } else {
+                System.out.println("aqui não da");
+            }
+        }
+        str.append(str);
+       
+        
+        }
+        return str.toString();
+    }
+   */ 
     
         public void gravarFicheiro() {
         try {
@@ -425,13 +565,13 @@ public class GestaoRentacar {
             out.writeObject(alugueresI);
             out.writeObject(alugueresC);
             out.writeObject(alugueresT);
+            out.writeObject(estatisticas);
             out.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-        
-    
+
 
     public void lerFicheiro() {
         try {
@@ -449,6 +589,7 @@ public class GestaoRentacar {
             alugueresI = (ArrayList<Aluguer>) in.readObject();
             alugueresC = (ArrayList<Aluguer>) in.readObject();
             alugueresT = (ArrayList<Aluguer>) in.readObject();
+            estatisticas = (ArrayList<Estatisticas>) in.readObject();
             
             Aluguer.numAlugueres = alugueres.size();
             Condutor.numCondutores = condutores.size();
@@ -459,6 +600,9 @@ public class GestaoRentacar {
             TipoVeiculo.numTiposDeVeiculo = tiposdeveiculo.size();
             Veiculo.numVeiculos = veiculos.size();
             VeiculoLigeiro.numVeiculosLigeiros = veiculosLigeiros.size();
+            Estatisticas.num_anos = estatisticas.size();
+                    
+            
           /*  Curso.numCursos = cursos.size();
             Aluno.numAlunos = alunos.size();
             FuncionarioDocente.numDocentes = docentes.size();

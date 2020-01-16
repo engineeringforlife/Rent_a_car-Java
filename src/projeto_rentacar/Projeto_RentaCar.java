@@ -104,7 +104,12 @@ public class Projeto_RentaCar implements Constantes{
                                 adicionarPessoa(CONDUTOR);
                                 break;
                             case 2:
-                                consultarCondutor();  
+                                if(gr.numeroCondutores()>0){
+                                    consultarCondutor();  
+                                }else{
+                                    System.out.println("*Ainda não foram inseridos condutores*");
+                                }
+                                
                                 break;
                         }
                     break;
@@ -163,18 +168,28 @@ public class Projeto_RentaCar implements Constantes{
                                }
                                 break;
                             case 5:
-                                if(gr.numeroDeAlugueres()>0){
-                                   levantarVeiculo();
-                               }else{
-                                   System.out.println("*Ainda não foram adicionados alugueres*");
-                               }
+                                if(gr.numeroAlugueresRes()>0){
+                                    if(gr.numeroDeFuncionarios()>0){
+                                        levantarVeiculo();
+                                    }else{
+                                         System.out.println("*Ainda não foram adicionados funcionarios*");
+                                    }
+                                }else{
+                                    System.out.println("*Não existem alugeres no estado RESERVADO *");
+                                }
+
                                 break;
                             case 6:
-                                if(gr.numeroDeAlugueres()>0){
-                                   entregarVeiculo();
-                               }else{
-                                   System.out.println("*Ainda não foram adicionados alugueres*");
-                               }
+                                if(gr.numeroAlugueresIn()>0){
+                                    if(gr.numeroDeFuncionarios()>0){
+                                        entregarVeiculo();
+                                    }else{
+                                         System.out.println("*Ainda não foram adicionados funcionarios*");
+                                    }
+                                }else{
+                                    System.out.println("*Não existem alugueres no estado INICIADO *");
+                                }
+
                                 break;
   
                         }
@@ -185,16 +200,54 @@ public class Projeto_RentaCar implements Constantes{
                     op2 = menu_estatisticas();
                     switch (op2) {
                         case 1:
-                            System.out.println("A precentagem de reservas canveladas é de " +gr.percentagemReservasCanceladas() + "%");
+                            if(gr.numeroDeAlugueres()>0){
+                                System.out.println("A precentagem de reservas canveladas é de " +gr.percentagemReservasCanceladas() + "%");
+                            }else{
+                                System.out.println("Ainda não foram inseridos alugueres");
+                            }
+                            
                             break;
                         case 2:
-                            System.out.println("O numero de veículos alugados no momento é de " + gr.numeroAlugueresIn());
+                            if(gr.numeroAlugueresIn()>0){
+                                System.out.println("O numero de veículos alugados no momento é de " + gr.numeroAlugueresIn());
+                            }else{
+                                System.out.println("De momento não existem veiculos alugados");
+                            }
+                            
                             break;
                         case 3:
-                            System.out.println(gr.mostrarLucroAno());
+                            if(gr.numeroAlugueresIn()>0){       //considera-se que os alugueres são pagos no ato de levantamento
+                                System.out.println(gr.mostrarLucroAno());
+                            }else
+                            {
+                                System.out.println("Ainda não constam lucros na base de dados");
+                            }
                             break;
                         case 4:
+                            if (gr.numeroDeAlugueres() > 0) {
+                                try{
+                                    
+                                int ano = Consola.lerInt("Indique o ano para a qual pretende verificar o alugueres mensais: ", 2015, 2030);
+/*
+                                if ((ano - 2019) <= gr.numeroAnoLucro()) {
+                                    System.out.println(gr.mostrarAlugueresMes(ano));
+                                } else {
+                                    System.out.println("Não foram registados alugueres para o ano " + ano);
+                                }
+                            */
+                                    System.out.println(gr.mostrarAlugueresMensalDec(ano));
+                                }catch(Exception IndexOutOfBoundsException){
+                                    
+                                    System.out.println("Não constam alugueres para o ano que inseriu");
+                                }
+                            }else{
+                                System.out.println("Ainda não foram inseridos alugueres");
+                            }
+                                
+                    
                             break;
+
+                          
                         case 0:
                             break;
                     }
@@ -209,6 +262,11 @@ public class Projeto_RentaCar implements Constantes{
     }
 
     public static int menu() {
+        System.out.println("\n\tMenu principal");
+        if(gr.numeroTiposVeiculo()>0){
+        System.out.println(gr.monstrarNumVeiculosPorTipo());
+        }
+        
         System.out.println("\n1.Gestão de Tipos de Veículos");
         System.out.println("2.Gestão de Veículos");
         System.out.println("3.Gestão de Funcionários");
@@ -330,11 +388,25 @@ public class Projeto_RentaCar implements Constantes{
                 int n_quilometros; 
 
             int pos;
-            char resposta;
+            char resposta='A';
             String designacao;
             
+            do{
+                matricula=Consola.lerString("Indique o numero da matricula no seguinte formato XX-00_00: "); //validar
+                pos=gr.pesquisarVeiculoPorMatricula(matricula);
+                if(pos!=-1){
+                    System.out.println("Esse veículo já consta na base de dados!");
+                    resposta=Consola.lerChar("Deseja introduzir outro veículo ou pretende voltar ao menu? Menu(M) Adicionar outro (A) : ", "MmAa");
+                    resposta=Character.toUpperCase(resposta);
+                    
+                    if(resposta == 'M'){
+                        pos=-1;
+                    }
+                }
+            }while(pos!=-1);
             
-            matricula=Consola.lerString("Indique o numero da matricula no seguinte formato XX-00_00: "); //validar
+            if(resposta == 'A'){
+                
             nºpessoas=Consola.lerInt("Indique o numero de pessoas possiveis de transportar: ", 1, 9);
                 
             System.out.println("\n*Existem os seguintes tipos de veículo *" + gr.monstrarDesignacaoTipoVeiculos());    // Alterara o to string se necessario
@@ -351,15 +423,7 @@ public class Projeto_RentaCar implements Constantes{
                                 adicionarTipodeVeiculo();
                                 System.out.println("*Tipo de veículo adicionado com sucesso*");
                                pos = gr.numeroTiposVeiculo() - 1;   //devolve a posição do ultimo tipo de veículo inserido
-                               /*
-                                try {
-                                    
 
-                                } finally{
-                                    pos = -1;
-                                    System.err.println("Impossivel concluir a acção!");
-                                }
-                               */
                             }
                         }
                     } while (pos == -1);
@@ -384,6 +448,13 @@ public class Projeto_RentaCar implements Constantes{
                 gr.adicionarVeiculo(veiculo);
                 tipoveiculo.adicionarVeiculo(veiculo);
             }
+                
+            }else
+            {
+                
+            }
+            
+            
             
                 }
                 
@@ -409,10 +480,7 @@ public class Projeto_RentaCar implements Constantes{
         {
             System.out.println("Ainda não existem veículos para esse tipo de veículo");
         }
-        
-        
-        
-                    
+             
     }
     
     public static void adicionarPessoa(char pessoa) {
@@ -486,8 +554,11 @@ public class Projeto_RentaCar implements Constantes{
     
         int NIF, pos;
         //verificar se é condutor
+
+        System.out.println("*Lista de condutores na base de dados*\n\n" + gr.monstrarCondutores() + "\n");
+            
         do{
-            NIF=Consola.lerInt("Insira o NIF do condutor", 0, 999999999);
+            NIF=Consola.lerInt("Insira o NIF do condutor: ", 0, 999999999);
             pos=gr.pesquisarCondutorPorNIF(NIF);
             if(pos==-1){
                 System.out.println("Não existe esse nif na base de dados!");
@@ -501,109 +572,125 @@ public class Projeto_RentaCar implements Constantes{
         
 
 }
-    
-    public static void adicionarOpAluguer (){
-        
-        String nome = Consola.lerString("Insira o nome da opção de aluguer: ");
-        String descricao = Consola.lerString("Insira a descrição da opção de aluguer: ");
-        double preco = Consola.lerDouble("Insira o preço da opção de aluguer: ", 0, 900000);
-    
-            Opcao op = new Opcao(nome, descricao, preco);
-            
-            gr.adicionarOpcao(op);
 
-}
-    public static void adicionarAluguer (){
+    public static void adicionarOpAluguer() {
+        String nome;
+        int pos;
+        char resposta = 'A';
+        do {
+            nome = Consola.lerString("Insira o nome da opção de aluguer: ");
+            pos = gr.pesquisarOpcaoPorNome(nome);
+            if (pos != -1) {
+                System.out.println("A opção de aluguer que inseriu já existe");
+                resposta = Consola.lerChar("Deseja adiconar outra opção ou voltar ao menu? Adicionar (A) Menu (M)", "AaMm");
+                resposta = Character.toUpperCase(resposta);
+                if (resposta == 'M') {
+                    pos = -1;
+                }
+            }
+        } while (pos != -1);
+
+        if (resposta == 'A') {
+
+            String descricao = Consola.lerString("Insira a descrição da opção de aluguer: ");
+            double preco = Consola.lerDouble("Insira o preço da opção de aluguer: ", 0, 900000);
+
+            Opcao op = new Opcao(nome, descricao, preco);
+
+            gr.adicionarOpcao(op);
+        } else {
+
+        }
+    }
+
+    public static void adicionarAluguer() {
         String data;
         boolean erro;
         Condutor condutor;
         Veiculo veiculo;
-        int numPessoas; 
-        String caracteristicas; 
-        double preco=0;
+        int numPessoas;
+        String caracteristicas;
+        double preco = 0;
         int pos;
         int NIF;
         char resposta;
         String matricula;
         long dias;
+        long dias_carta;
         //Adicionar/pesquisar condutor
-        do{
-                //será necessário?
-            if(gr.numeroCondutores()> 0){
+        do {
+            //será necessário?
+            if (gr.numeroCondutores() > 0) {
                 System.out.println("*Lista de condutores na base de dados*\n\n" + gr.monstrarCondutores() + "\n");
             }
-            NIF=Consola.lerInt("Indique o NIF do condutor: ", 0, 999999999);
-            pos= gr.pesquisarCondutorPorNIF(NIF);
-            if (pos==-1){
+            NIF = Consola.lerInt("Indique o NIF do condutor: ", 0, 999999999);
+            pos = gr.pesquisarCondutorPorNIF(NIF);
+            if (pos == -1) {
                 System.out.println("O condutor que inseriu nao consta na base de dados. Deseja inseri-lo?");
-                resposta= Consola.lerChar("SIM(S) ; Não, enganei-me a escrever o número(N): ", "SsNn");
-                resposta=Character.toUpperCase(resposta);
-                if (resposta == 'S' )
-                {   
+                resposta = Consola.lerChar("SIM(S) ; Não, enganei-me a escrever o número(N): ", "SsNn");
+                resposta = Character.toUpperCase(resposta);
+                if (resposta == 'S') {
                     System.out.println("\n*Foi redreccionado para a função adicionar condutor*");
                     adicionarPessoa(CONDUTOR);
-                    pos= gr.numeroCondutores()-1;
+                    pos = gr.numeroCondutores() - 1;
                     System.out.println("\n*Condutor adicionado com sucesso!*\n");
-                }          
+                }
             }
-        }while(pos==-1);
-        
-        numPessoas=Consola.lerInt("Indique o numero de pessoas: ", 0, 9);
-        caracteristicas=Consola.lerString("Indique quais as caracteristicas do aluguer: ");
+        } while (pos == -1);
+
+        numPessoas = Consola.lerInt("Indique o numero de pessoas: ", 0, 9);
+        caracteristicas = Consola.lerString("Indique quais as caracteristicas do aluguer: ");
         Condutor c = gr.obterCondutor(pos);
         //Adicionar/pesquisar veículo
-        do{
+        do {
             System.out.println("\n*Existem os seguintes veículos*");// Depois mostar os veículos disponiveis para a data
-            System.out.println(gr.monstrarVeiculos()+"\n");
+            System.out.println(gr.monstrarVeiculos() + "\n");
             System.out.println("\n*Caso deseje pode inserir a matricula de um novo veículo na base de dados*\n");
-            matricula= Consola.lerString("Insira a matricula do Veículo que pretende alugar: ");
+            matricula = Consola.lerString("Insira a matricula do Veículo que pretende alugar: ");
             pos = gr.pesquisarVeiculoPorMatricula(matricula);
-            if (pos==-1){
+            if (pos == -1) {
                 System.out.println("O veículo que inseriu não consta na base de dados. Deseja inseri-lo?");
-                resposta= Consola.lerChar("SIM(S) ; Não, enganei-me a escrever a matrícula(N) :", "SsNn");
-                resposta=Character.toUpperCase(resposta);
-                if (resposta == 'S' )
-                {   
+                resposta = Consola.lerChar("SIM(S) ; Não, enganei-me a escrever a matrícula(N) :", "SsNn");
+                resposta = Character.toUpperCase(resposta);
+                if (resposta == 'S') {
                     System.out.println("\n*Foi redireccionado para a função adicionar veículo*");
                     adicionarVeiculo();
-                    pos= gr.numeroVeiculos()-1;
+                    pos = gr.numeroVeiculos() - 1;
                     System.out.println("*Veículo adicionado com sucesso*");
                 }
-                System.out.println("Apanhei o erro2!!!");
             }
-            System.out.println("Apanhei o erro1!!!");
-            
-            try{
-                if(gr.obterVeiculo(pos).getNºpessoas()<numPessoas){
-                System.out.println("O veículo de que escolheu apenas consegue transportar " + gr.obterVeiculo(pos).getNºpessoas() + " pessoas");
-                pos=-1;
-            }  
-            }catch(IndexOutOfBoundsException exception){
-                
-                
+
+            try {
+                if (gr.obterVeiculo(pos).getNºpessoas() < numPessoas) {
+                    System.out.println("O veículo de que escolheu apenas consegue transportar " + gr.obterVeiculo(pos).getNºpessoas() + " pessoas");
+                    pos = -1;
+                }
+            } catch (IndexOutOfBoundsException exception) {
+
             }
-                      
-        }while(pos==-1);
-        System.out.println("Apanhei o erro!!!");
-        preco+=gr.obterVeiculo(pos).getTipoveiculo().getPreco();
+
+        } while (pos == -1);
+
+        preco += gr.obterVeiculo(pos).getTipoveiculo().getPreco();
         Veiculo v = gr.obterVeiculo(pos);
-        
-        String localLevantamento=Consola.lerString("Indique o local de levantamento: ");
-        String localEntrega=Consola.lerString("Indique o local de Entrega: ");
+
+        String localLevantamento = Consola.lerString("Indique o local de levantamento: ");
+        String localEntrega = Consola.lerString("Indique o local de Entrega: ");
         Calendar dataHoraLevantamento = new GregorianCalendar();
         Calendar dataHoraEntrega = new GregorianCalendar();
-        
+
+        do{
         do {
             do {
                 erro = false;
 
                 try {
-                    data = Consola.lerString("Indique a data e hora de levantamento: ");
+                    data = Consola.lerString("Indique a data e hora de levantamento no seguinte formato DD-MM-AAAA HH:mm  : ");
                     dataHoraLevantamento.setTime(formatoHD.parse(data));
 
                 } catch (ParseException e) {
                     erro = true;
-                    System.err.println("Data de levantamento errada!");
+                    System.err.println("Data de levantamento no formato errado!");
                 }
             } while (erro);
 
@@ -611,86 +698,83 @@ public class Projeto_RentaCar implements Constantes{
                 erro = false;
 
                 try {
-                    data = Consola.lerString("Indique a data e hora de entrega: ");
+                    data = Consola.lerString("Indique a data e hora de entrega  no seguinte formato DD-MM-AAAA HH:mm  : ");
                     dataHoraEntrega.setTime(formatoHD.parse(data));
 
                 } catch (ParseException e) {
                     erro = true;
-                    System.err.println("Data de entrega errada!");
+                    System.err.println("Data de entrega no formato errado!");
                 }
             } while (erro);
-            
 
             dias = gr.diferencaDias(dataHoraLevantamento, dataHoraEntrega);
-            if(dias <= 0){
+            if (dias <= 0) {
                 System.out.println("*Deve inserir uma data de levantamento superior à data de entrega!*");
             }
         } while (dias <= 0);
         
-        Aluguer a = new Aluguer(localLevantamento, localEntrega, dataHoraLevantamento, dataHoraEntrega, c, v, numPessoas, caracteristicas, preco);
+        if(gr.verificaDisponibilidade(dataHoraLevantamento, dataHoraEntrega, v) == false ){
+            System.out.println("\nEste veículo já têm reservas para essas datas");
+        }
+        
+        }while (gr.verificaDisponibilidade(dataHoraLevantamento, dataHoraEntrega, v) == false );
+        
 
-        resposta = Consola.lerChar("Pretende adicionar alguma opção extra? ", "SsNn");
-        resposta = Character.toUpperCase(resposta);
-        if (resposta == 'S') {
-            System.out.println(gr.monstrarOpcoes());
-            do {
+
+        dias_carta = gr.diferencaDias(dataHoraEntrega, c.getDataValCarta());
+        if (dias_carta >= 0) {
+            Aluguer a = new Aluguer(localLevantamento, localEntrega, dataHoraLevantamento, dataHoraEntrega, c, v, numPessoas, caracteristicas, preco);
+
+            resposta = Consola.lerChar("Pretende adicionar alguma opção extra? Sim(S) Nao (N) ", "SsNn");
+            resposta = Character.toUpperCase(resposta);
+            if (resposta == 'S') {
+                System.out.println(gr.monstrarOpcoes());
                 do {
-                    String nome = Consola.lerString("Indique o nome da opção de aluguer: ");
-                    pos = gr.pesquisarOpcaoPorNome(nome);
-                    if (pos == -1) {
-                        System.out.println("*A opção de aluguer que escolheu não existe!*\n");
-                        resposta=Consola.lerChar("Pretende adicionar à base de dados uma nova opção de aluguer?\nSim (S), Não(N) ", "SsNn");
-                        resposta=Character.toUpperCase(resposta);
-                        if (resposta =='S'){
-                            System.out.println("*Foi redireccionado para a função adicionar opção de aluguer*");
-                            adicionarOpAluguer();
-                            pos=gr.numeroDeOpcoes()-1;
-                            System.out.println("*Opção adicionada com sucesso*");
+                    do {
+                        String nome = Consola.lerString("Indique o nome da opção de aluguer: ");
+                        pos = gr.pesquisarOpcaoPorNome(nome);
+                        if (pos == -1) {
+                            System.out.println("*A opção de aluguer que escolheu não existe!*\n");
+                            resposta = Consola.lerChar("Pretende adicionar à base de dados uma nova opção de aluguer?\nSim (S), Não(N) ", "SsNn");
+                            resposta = Character.toUpperCase(resposta);
+                            if (resposta == 'S') {
+                                System.out.println("*Foi redireccionado para a função adicionar opção de aluguer*");
+                                adicionarOpAluguer();
+                                pos = gr.numeroDeOpcoes() - 1;
+                                System.out.println("*Opção adicionada com sucesso*");
+                            }
+
                         }
-                        
-                    }
-                } while (pos == -1);
+                    } while (pos == -1);
 
-                preco += gr.obterOpcao(pos).getPreco();
+                    preco += gr.obterOpcao(pos).getPreco();
 
-                System.out.println("Deseja adicionar mais opções de aluguer a este aluguer?");
-                resposta = Consola.lerChar("sim(S) não(N): ", "SsNn");
-                resposta = Character.toUpperCase(resposta);
-                Opcao o = gr.obterOpcao(pos);
-                a.adicionarOpcao(o);
+                    System.out.println("Deseja adicionar mais opções de aluguer a este aluguer?");
+                    resposta = Consola.lerChar("sim(S) não(N): ", "SsNn");
+                    resposta = Character.toUpperCase(resposta);
+                    Opcao o = gr.obterOpcao(pos);
+                    a.adicionarOpcao(o);
 
-            } while (resposta == 'S');
-        }
-
-        gr.adicionarAluguer(a);
-        gr.adicionarAlugueresRes(a);
-        c.adicionarAluguer(a);
-        c.adicionarAlugueresRes(a);
-        
-        
-        preco=preco*(double)dias;
-
-
-        a.setPreco(preco);
-        
-        
-        //o array começa a contar apartir de 2019(pos 0 = 2019)
-      
-        //int auxiliar =((dataHoraLevantamento.get(Calendar.YEAR))-2019) - gr.numeroAnoLucro();
-        
-        if(((dataHoraLevantamento.get(Calendar.YEAR))-2019) >= gr.numeroAnoLucro()){ 
-            int n_pos= ((dataHoraLevantamento.get(Calendar.YEAR))-2019) - gr.numeroAnoLucro();
-            Estatisticas e = new Estatisticas();
-            for (int i = 0; i <= n_pos; i++) {
-                gr.adicionarAnoLucro(e);
+                } while (resposta == 'S');
             }
-            gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);    
-        }else{
-            gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);  
+
+                gr.adicionarAluguer(a);
+                gr.adicionarAlugueresRes(a);
+                c.adicionarAluguer(a);
+                c.adicionarAlugueresRes(a);
+                v.adicionarAluguer(a);
+                v.adicionarAlugueresRes(a);
+
+                preco = preco * (double) dias;
+
+                a.setPreco(preco);
+
+        } else {
+            System.out.println("Não é possivel concluir o aluguer pois a carta de condução do condutor caduca antes da data de entrega ");
         }
-        
+
     }
-    
+
     
     public static void consultarAlugueresporEstado(){
         System.out.println("Indique qual o estado pela qual pretende pesquisar alugueres");
@@ -790,9 +874,10 @@ public class Projeto_RentaCar implements Constantes{
         Condutor c = gr.obterCondutor(pos);
 
         if (c.numeroAlugueresRes()> 0) {
-            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
             System.out.println(c.mostrarAlugueresRes());
-            System.out.println("*Opções de alteração*\n1-Alterar data e hora de levantamento e entrega\n2-Alterar local de entrega e levantamento\n0-Voltar atras\n");
+            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
+            
+            System.out.println("\n*Opções de alteração*\n1-Alterar data e hora de levantamento e entrega\n2-Alterar local de entrega e levantamento\n0-Voltar atras\n");
             resposta = Consola.lerInt("Indique a opção que pretende alterar: ", 0, 4);
             switch (resposta) {
                 case 1:
@@ -800,12 +885,12 @@ public class Projeto_RentaCar implements Constantes{
                         do {
                             erro = false;
                             try {
-                                data = Consola.lerString("Indique a data e hora de levantamento: ");
+                                data = Consola.lerString("Indique a data e hora de levantamento no seguinte formato DD-MM-AAAA HH:mm : ");
                                 dataHoralevantamento.setTime(formatoHD.parse(data));
 
                             } catch (ParseException e) {
                                 erro = true;
-                                System.err.println("Data de levantamento errada!");
+                                System.err.println("Data de levantamento no formato errado!");
                             }
                         } while (erro);
 
@@ -813,12 +898,12 @@ public class Projeto_RentaCar implements Constantes{
                             erro = false;
 
                             try {
-                                data = Consola.lerString("Indique a data e hora de entrega: ");
+                                data = Consola.lerString("Indique a data e hora de entrega no seguinte formato DD-MM-AAAA HH:mm : ");
                                 dataHoraentrega.setTime(formatoHD.parse(data));
 
                             } catch (ParseException e) {
                                 erro = true;
-                                System.err.println("Data de entrega errada!");
+                                System.err.println("Data de entrega no formato errado!");
                             }
                         } while (erro);
 
@@ -876,100 +961,177 @@ public class Projeto_RentaCar implements Constantes{
                 System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
             }
             }while(pos==-1);
+            
             Aluguer a = c.obterAlugueresRes(pos);
+            Veiculo v =a.getVeiculo();
             
             c.adicionarAlugueresCan(a);
             gr.adicionarAlugueresCan(a);
             gr.RemoverAlugueresRes(a);
             c.RemoverAlugueresRes(a);
+            v.RemoverAlugueresRes(a);
             
-            
+            System.out.println("\n\n*Aluguer removido com sucesso!* ");
             
         }else{   
             System.out.println("O condutor escolhido não possui alugueres no estado reservado");
         }
     }
-        public static void levantarVeiculo (){
-            
+    
+    public static void levantarVeiculo() {
+
         int NIF;
         int pos;
         int numAluguer;
-        System.out.println("*Constam na base de dados os seguintes Condutores*");
-        System.out.println(gr.monstrarCondutores());
+        String condVeiculo;
+        int nivelReserva;
+
+        
+        System.out.println("*Constam na base de dados os seguintes Funcionários*");
+        System.out.println(gr.monstrarFuncionarios());
         do {
-            NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
-            pos = gr.pesquisarCondutorPorNIF(NIF);
+            NIF = Consola.lerInt("Insira o seu NIF (FUNCIONARIO): ", 0, 999999999);
+            pos = gr.pesquisarFuncionarioPorNIF(NIF);
             if (pos == -1) {
                 System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
             }
         } while (pos == -1);
-        
-        Condutor c = gr.obterCondutor(pos);
+        Funcionario f = gr.obterFuncionario(pos);
+        if (f.getFuncao().equalsIgnoreCase("agente")) {
 
-        if (c.numeroAlugueresRes()> 0) {
-            System.out.println(c.mostrarAlugueresRes()); 
-            do{
+            System.out.println("*Constam na base de dados os seguintes Condutores*");
+            System.out.println(gr.monstrarCondutores());
+            do {
+                NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
+                pos = gr.pesquisarCondutorPorNIF(NIF);
+                if (pos == -1) {
+                    System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
+                }
+            } while (pos == -1);
 
-            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
-            pos=c.pesquisarAlugueresRes(numAluguer);
-            if(pos==-1){
-                System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
+            Condutor c = gr.obterCondutor(pos);
+
+            if (c.numeroAlugueresRes() > 0) {
+                System.out.println(c.mostrarAlugueresRes());
+                do {
+
+                    numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, gr.numeroDeAlugueres());
+                    pos = c.pesquisarAlugueresRes(numAluguer);
+                    if (pos == -1) {
+                        System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
+                    }
+                } while (pos == -1);
+                condVeiculo=Consola.lerString("Indique as condições do veículo");
+                nivelReserva=Consola.lerInt("Indique o nivel da reserva de combustível (Litros: )", 0, 100);
+                
+                Aluguer a = c.obterAlugueresRes(pos);
+                c.adicionarAlugueresIn(a);
+                gr.adicionarAlugueresIn(a);
+                gr.RemoverAlugueresRes(a);
+                c.RemoverAlugueresRes(a);
+                Veiculo v = a.getVeiculo();
+                Calendar dataHoraLevantamento = a.getDataHoraLevantamento();
+                double preco = a.getPreco();
+                
+                Servico s= new Servico(a, a.getDataHoraLevantamento(), condVeiculo, nivelReserva, f, v.n_quilometros, 'L');
+                gr.adicionarServico(s);
+                
+                //considero que o pagameto é realizado aquando do levantamento da viatura
+                //o array começa a contar apartir de 2019(pos 0 = 2019)
+                //int auxiliar =((dataHoraLevantamento.get(Calendar.YEAR))-2019) - gr.numeroAnoLucro();
+                if (((dataHoraLevantamento.get(Calendar.YEAR)) - 2019) >= gr.numeroAnoLucro()) {
+                    int n_pos = ((dataHoraLevantamento.get(Calendar.YEAR)) - 2019) - gr.numeroAnoLucro();
+                    for (int i = 0; i <= n_pos; i++) {
+                        Estatisticas e = new Estatisticas();
+                        gr.adicionarAnoLucro(e);
+                        e.adicionarAlugueresMensal();
+                    }
+                    gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);
+                } else {
+                    gr.adicionarLucro(dataHoraLevantamento.get(Calendar.YEAR), dataHoraLevantamento.get(Calendar.MONTH), preco);
+                }
+            } else {
+                System.out.println("O condutor escolhido não possui alugueres no estado reservado");
             }
-            }while(pos==-1);
-            Aluguer a = c.obterAlugueresRes(pos);
-            
-            c.adicionarAlugueresIn(a);
-            gr.adicionarAlugueresIn(a);
-            gr.RemoverAlugueresRes(a);
-            c.RemoverAlugueresRes(a);
 
-        }else{   
-            System.out.println("O condutor escolhido não possui alugueres no estado reservado");
+        }else{
+            System.out.println("Para poder efetuar o levantamento de um veículo o funcionário tem de ser AGENTE");
         }
-            
-        }
+
+    }
         
                 
-        public static void entregarVeiculo (){
-            
+    public static void entregarVeiculo() {
+
         int NIF;
         int pos;
         int numAluguer;
-        System.out.println("*Constam na base de dados os seguintes Condutores*");
-        System.out.println(gr.monstrarCondutores());
+        String condVeiculo;
+        int nivelReserva;
+        int quilometros;
+        
+        System.out.println("*Constam na base de dados os seguintes Funcionários*");
+        System.out.println(gr.monstrarFuncionarios());
         do {
-            NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
-            pos = gr.pesquisarCondutorPorNIF(NIF);
+            NIF = Consola.lerInt("Insira o seu NIF (FUNCIONARIO): ", 0, 999999999);
+            pos = gr.pesquisarFuncionarioPorNIF(NIF);
             if (pos == -1) {
                 System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
             }
         } while (pos == -1);
-        
-        Condutor c = gr.obterCondutor(pos);
+        Funcionario f = gr.obterFuncionario(pos);
+        if (f.getFuncao().equalsIgnoreCase("agente")) {
 
-        if (c.numeroAlugueresRes()> 0) {
-            System.out.println(c.mostrarAlugueresIn()); 
-            do{
+            System.out.println("*Constam na base de dados os seguintes Condutores*");
+            System.out.println(gr.monstrarCondutores());
+            do {
+                NIF = Consola.lerInt("Introduza o nif do condutor: ", 0, 999999999);
+                pos = gr.pesquisarCondutorPorNIF(NIF);
+                if (pos == -1) {
+                    System.out.println("O Nif que inseriu não consta na base de dados, introduza um dos listados acima");
+                }
+            } while (pos == -1);
 
-            numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
-            pos=c.pesquisarAlugueresRes(numAluguer);
-            if(pos==-1){
-                System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
+            Condutor c = gr.obterCondutor(pos);
+
+            if (c.numeroAlugueresIn() > 0) {
+                System.out.println(c.mostrarAlugueresIn());
+                do {
+
+                    numAluguer = Consola.lerInt("Indique o numero do aluguer a que se refere: ", 1, c.numeroAlugueres());
+                    pos = c.pesquisarAlugueresIn(numAluguer);
+                    if (pos == -1) {
+                        System.out.println("*Indique um dos numeros de aluguer mostrado acima!*");
+                    }
+                } while (pos == -1);
+                
+
+                Aluguer a = c.obterAlugueresIn(pos);
+
+                c.adicionarAlugueresTer(a);
+                gr.adicionarAlugueresTer(a);
+                gr.removerAlugueresIn(a);
+                c.removerAlugueresIn(a);
+                condVeiculo=Consola.lerString("Indique as condições do veículo: ");
+                nivelReserva=Consola.lerInt("Indique o nivel da reserva de combustível (Litros: )", 0, 100);
+                do{
+                    quilometros=Consola.lerInt("Indique os quilómetros do veículo: ",0, 999999);
+                    if(quilometros < a.getVeiculo().getN_quilometros()){
+                        System.out.println("Quando o veículo foi levantado já tinha" + a.getVeiculo().getN_quilometros() + "quilómetros"); 
+                    }
+                }while(quilometros < a.getVeiculo().getN_quilometros());
+                Servico s = new Servico(a, a.getDataHoraLevantamento(), condVeiculo, nivelReserva, f, quilometros, 'E');
+                    
+
+            } else {
+                System.out.println("O condutor escolhido não possui alugueres no estado Iniciado");
             }
-            }while(pos==-1);
-            
-            Aluguer a = c.obterAlugueresIn(pos);
-            
-            c.adicionarAlugueresTer(a);
-            gr.adicionarAlugueresTer(a);
-            gr.removerAlugueresIn(a);
-            c.removerAlugueresIn(a);
 
-        }else{   
-            System.out.println("O condutor escolhido não possui alugueres no estado Iniciado");
+        } else {
+            System.out.println("Para poder efetuar A entrega de um veículo o funcionário tem de ser AGENTE");
         }
-            
-        }
+
+    }
         
 
 

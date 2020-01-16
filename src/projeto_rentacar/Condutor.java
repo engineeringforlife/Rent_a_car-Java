@@ -23,8 +23,8 @@ public class Condutor extends Pessoa implements Serializable{
     private ArrayList<Aluguer> alugueresI = new ArrayList<>();
     private ArrayList<Aluguer> alugueresC = new ArrayList<>();
     private ArrayList<Aluguer> alugueresT = new ArrayList<>();
-    
 
+    
     public Condutor(String n_carta, Calendar dataValCarta, int NIF, String nome, String morada, int telefone) {
         super(NIF, nome, morada, telefone);
         this.n_carta = n_carta;
@@ -32,9 +32,12 @@ public class Condutor extends Pessoa implements Serializable{
         numCondutores++;
     }
 
+    
+    
     /**
      * @return the n_carta
      */
+    
     public String getN_carta() {
         return n_carta;
     }
@@ -76,8 +79,6 @@ public class Condutor extends Pessoa implements Serializable{
         }
         return str.toString();
     }
-    
-    
     
     
      public int numeroAlugueresRes(){
@@ -128,6 +129,14 @@ public class Condutor extends Pessoa implements Serializable{
         }
         return str.toString();   
     }
+     public int pesquisarAlugueresIn (int numAluguer){
+        for (int i = 0; i < alugueresI.size(); i++) {
+            if(alugueresI.get(i).getNumero()==numAluguer){
+                return i; 
+            }
+        }
+        return -1;
+     }
     
     public Aluguer obterAlugueresIn (int pos){
         return alugueresI.get(pos);
@@ -186,10 +195,14 @@ public class Condutor extends Pessoa implements Serializable{
                 append(dataValCarta.get(Calendar.DATE)).append("-").
                 append(dataValCarta.get(Calendar.MONTH)+1).append("-").
                 append(dataValCarta.get(Calendar.YEAR));
-        
+        if(numeroAlugueres()>0){
+                    str.append("\n\nOs alugueres registados para o Senhor ").append(getNome()).append(" são os seguintes:\n");
+                    str.append(monstrarAlugueres());
+        }else{
+             str.append("\n\nO Senhor ").append(getNome()).append(" ainda não realizou alugueres");
+        }
         return str.toString();
-                
-                
+
     }
     
     

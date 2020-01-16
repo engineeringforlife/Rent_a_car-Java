@@ -27,11 +27,12 @@ public class Aluguer implements Serializable {
     private int numPessoas;
     private String carataristicas;
     private double preco;
+    
     private ArrayList<Opcao> opcoes = new ArrayList<>();
     
 
     public Aluguer(String localLevantamento, String localEntrega, Calendar dataHoraLevantamento, Calendar dataHoraEntrega, Condutor condutor, Veiculo veiculo, int numPessoas, String carataristicas, double preco) {
-
+        numAlugueres++;
         this.localLevantamento = localLevantamento;
         this.localEntrega = localEntrega;
         this.dataHoraLevantamento = dataHoraLevantamento;
@@ -41,7 +42,8 @@ public class Aluguer implements Serializable {
         this.numPessoas = numPessoas;
         this.carataristicas = carataristicas;
         this.preco = preco;
-        numAlugueres++;
+        
+        
     }
 
     
@@ -225,7 +227,7 @@ public class Aluguer implements Serializable {
                 append(dataHoraEntrega.get(Calendar.DATE)).append("-").
                 append(dataHoraEntrega.get(Calendar.MONTH)+1).append("-").
                 append(dataHoraEntrega.get(Calendar.YEAR));
-        str.append("\nCondutor: ").append(condutor);
+        //str.append("\nCondutor: ").append(condutor);
         str.append("\nVeiculo: ").append(veiculo);
         
         return str.toString();

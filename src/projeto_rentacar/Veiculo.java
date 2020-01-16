@@ -6,6 +6,7 @@
 package projeto_rentacar;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +19,8 @@ public class Veiculo implements Serializable{
     protected TipoVeiculo tipoveiculo;
     protected String combustivel;       
     protected int n_quilometros;
+    protected ArrayList<Aluguer> alugueres = new ArrayList<>();
+    protected ArrayList<Aluguer> alugueresR = new ArrayList<>();
 
     public Veiculo(String matricula, int nºpessoas, TipoVeiculo tipoveiculo, String combustivel, int n_quilometros) {
         this.matricula = matricula;
@@ -28,6 +31,63 @@ public class Veiculo implements Serializable{
         numVeiculos++;
     }
 
+    
+        public int numeroDeAlugueres (){
+        return alugueres.size();
+    }
+         public void adicionarAluguer (Aluguer aluguer){
+        alugueres.add(aluguer);
+         }
+    
+    public String monstrarAlugueres (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < alugueres.size(); i++) {
+            str.append(alugueres.get(i)).append("\n");
+        }
+        return str.toString();
+    }
+        
+    public void pesquisarAlugueres (){
+        
+    }
+            
+    public Aluguer obterAlugueres (int pos){
+        return alugueres.get(pos);
+    }
+    
+     public int numeroAlugueresRes(){
+       return alugueresR.size();
+    }
+    public void adicionarAlugueresRes(Aluguer aluguer){
+        alugueresR.add(aluguer);
+    }
+    
+    public void RemoverAlugueresRes(Aluguer aluguer){
+        alugueresR.remove(aluguer);
+    }
+               
+        public String mostrarAlugueresRes (){
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < alugueresR.size(); i++) {
+            str.append("\n").append(alugueresR.get(i));
+        }
+        return str.toString();
+    }
+        public int pesquisarAlugueresRes (int numAluguer){
+        for (int i = 0; i < alugueresR.size(); i++) {
+            if(alugueresR.get(i).getNumero()==numAluguer){
+                return i; 
+            }
+        }
+        return -1;
+    }
+        public Aluguer obterAlugueresRes (int pos){
+        return alugueresR.get(pos);
+    }
+    
+        
+        
+    
     /**
      * @return the matricula
      */
