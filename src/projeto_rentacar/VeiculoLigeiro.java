@@ -8,14 +8,26 @@ package projeto_rentacar;
 import java.io.Serializable;
 
 /**
+ * Classe que contém as caracteristicas de cada tipo de veículo ligeiro
  *
- * @author 2181042
+ * @author 2181042/2172563
  */
-public class VeiculoLigeiro extends Veiculo implements Serializable{
+public class VeiculoLigeiro extends Veiculo implements Serializable {
+
     public static int numVeiculosLigeiros;
     private int n_portas;
     private int capacidade;
 
+    /**
+     *
+     * @param n_portas - numero de portas do veículo
+     * @param capacidade - numero de malas possiveis de transportar
+     * @param matricula - matricula do veículo
+     * @param nºpessoas - nº de pessoas capazes de transportar
+     * @param tipoveiculo - tipo de veículo associado
+     * @param combustivel - combustivel do veiculo
+     * @param n_quilometros - nº de quilometros do veículo
+     */
     public VeiculoLigeiro(int n_portas, int capacidade, String matricula, int nºpessoas, TipoVeiculo tipoveiculo, String combustivel, int n_quilometros) {
         super(matricula, nºpessoas, tipoveiculo, combustivel, n_quilometros);
         this.n_portas = n_portas;
@@ -23,35 +35,23 @@ public class VeiculoLigeiro extends Veiculo implements Serializable{
         numVeiculosLigeiros++;
     }
 
-    /**
-     * @return the n_portas
-     */
     public int getN_portas() {
         return n_portas;
     }
 
-    /**
-     * @param n_portas the n_portas to set
-     */
     public void setN_portas(int n_portas) {
         this.n_portas = n_portas;
     }
 
-    /**
-     * @return the capacidade
-     */
     public int getCapacidade() {
         return capacidade;
     }
 
-    /**
-     * @param capacidade the capacidade to set
-     */
     public void setCapacidade(int capacidade) {
         this.capacidade = capacidade;
     }
-    
-        public String toString() {
+
+    public String toString() {
         StringBuilder str = new StringBuilder("");
         str.append(super.toString());
         str.append("\nNºportas: ").append(n_portas);
@@ -60,7 +60,5 @@ public class VeiculoLigeiro extends Veiculo implements Serializable{
         return str.toString();
 
     }
-    
-    
-    
+
 }

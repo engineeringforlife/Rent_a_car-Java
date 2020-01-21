@@ -16,14 +16,14 @@ import java.util.Calendar;
 import java.util.Collections;
 import static projeto_rentacar.Projeto_RentaCar.gr;
 
-  
-
 /**
+ * Classe que contém e manipula todos os ArrayLists.
  *
- * @author 2181042
+ * @author 2181042/2172563
  */
 public class GestaoRentacar {
-    private ArrayList<Veiculo> veiculos= new ArrayList<>();
+
+    private ArrayList<Veiculo> veiculos = new ArrayList<>();
     private ArrayList<VeiculoLigeiro> veiculosLigeiros = new ArrayList<>();
     private ArrayList<TipoVeiculo> tiposdeveiculo = new ArrayList<>();
     private ArrayList<Condutor> condutores = new ArrayList<>();
@@ -31,171 +31,236 @@ public class GestaoRentacar {
     private ArrayList<Pessoa> pessoas = new ArrayList<>();
     private ArrayList<Servico> servicos = new ArrayList<>();
     private ArrayList<Opcao> opcoes = new ArrayList<>();
-    
     private ArrayList<Aluguer> alugueres = new ArrayList<>();
-    
     private ArrayList<Aluguer> alugueresR = new ArrayList<>();
     private ArrayList<Aluguer> alugueresI = new ArrayList<>();
     private ArrayList<Aluguer> alugueresC = new ArrayList<>();
     private ArrayList<Aluguer> alugueresT = new ArrayList<>();
-    
-    //private ArrayList<Double> lucroAno = new ArrayList<>();
     private ArrayList<Estatisticas> estatisticas = new ArrayList<>();
 
-    
-    //Extras:
-    /*Ordenar elementosdas listas
-    */
-    
-    
-    
-
-    
-    
-        public String mostrarAlugueresMensalDec(int ano) {
+    /**
+     *
+     * @param ano - ano à qual se pretende verificar as informações
+     * @return String com informação mesal de alugueres, oredenada por ordem
+     * decrescente do numero de alugueres mensais
+     */
+    public String mostrarAlugueresMensalDec(int ano) {
 
         OrdenaAlugueresMensal on = new OrdenaAlugueresMensal();
         Collections.sort(estatisticas.get(ano - 2019).getAlugueres_mensal(), on);
         return estatisticas.get(ano - 2019).mostrarAlugueresMensal();
-
     }
-    
 
-    
-    public void adicionarLucro(int ano, int mes, double lucro_aluguer){
-        
-        
-
+    /**
+     * Função que permite adicionar o lucro a um determinado mes de um
+     * determinado ano
+     *
+     * @param ano - ano à qual se pretende adicionar informações
+     * @param mes - mês à qual e pretende adicionar informações
+     * @param lucro_aluguer - lucro do aluguer
+     */
+    public void adicionarLucro(int ano, int mes, double lucro_aluguer) {
         double lucro_anual = estatisticas.get(ano - 2019).getLucro_anual();
-        double lucro_mensal=estatisticas.get(ano - 2019).getLucro_mensal(mes+1);
-        
+        double lucro_mensal = estatisticas.get(ano - 2019).getLucro_mensal(mes + 1);
         double totalLucroAnual = lucro_anual + lucro_aluguer;
         double totalLucroMensal = lucro_mensal + lucro_aluguer;
-        
         estatisticas.get(ano - 2019).setLucro_anual(totalLucroAnual);
-        estatisticas.get(ano - 2019).setLucro_mensal(totalLucroMensal, mes+1);
-        estatisticas.get(ano - 2019).addNum_alugueres_mensal(mes+1);
-        
+        estatisticas.get(ano - 2019).setLucro_mensal(totalLucroMensal, mes + 1);
+        estatisticas.get(ano - 2019).addNum_alugueres_mensal(mes + 1);
     }
-    
-    
-    public String mostrarLucroAno (){
+
+    /**
+     *
+     * @return String contendo os lucros anuais
+     */
+    public String mostrarLucroAno() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < estatisticas.size(); i++) {
-            str.append("\nO lucro no ano ").append(2019+i).append(" foi de ").append(estatisticas.get(i).getLucro_anual()).append(" €");
+            str.append("\nO lucro no ano ").append(2019 + i).append(" foi de ").append(estatisticas.get(i).getLucro_anual()).append(" €");
         }
         return str.toString();
     }
-    
-        
-    public void adicionarAnoLucro(Estatisticas e){
+
+    /**
+     * Adiciona uma posição ao ArrayList Estatisticas
+     *
+     * @param e - Objeto da classe Estatisticas
+     */
+    public void adicionarAnoLucro(Estatisticas e) {
         estatisticas.add(e);
     }
-    
-    public int numeroAnoLucro(){
+
+    /**
+     *
+     * @return numero de anos de lucro que constam na base de dados
+     */
+    public int numeroAnoLucro() {
         return estatisticas.size();
     }
-    
-    
-    public int numeroAlugueresRes(){
-       return alugueresR.size();
+
+    /**
+     *
+     * @return numero de alugueres no estado reservado
+     */
+    public int numeroAlugueresRes() {
+        return alugueresR.size();
     }
-    public void adicionarAlugueresRes(Aluguer aluguer){
+
+    /**
+     * permite adicionar um aluguer no estado reservado
+     *
+     * @param aluguer - contém toda a informação de aluguer
+     */
+    public void adicionarAlugueresRes(Aluguer aluguer) {
         alugueresR.add(aluguer);
     }
-    public void RemoverAlugueresRes(Aluguer aluguer){
+
+    /**
+     * Permite remover um aluguuer do ArrayList
+     *
+     * @param aluguer - contém toda a informação de aluguer
+     */
+    public void RemoverAlugueresRes(Aluguer aluguer) {
         alugueresR.remove(aluguer);
     }
-               
-        public String mostrarAlugueresRes (){
+
+    /**
+     *
+     * @return String com todos os alugueres no estado RESERVADO
+     */
+    public String mostrarAlugueresRes() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < alugueresR.size(); i++) {
             str.append("\n").append(alugueresR.get(i));
         }
         return str.toString();
     }
-        
-    public int numeroAlugueresIn(){
+
+    /**
+     *
+     * @return numero de alugueres INICIADOS
+     */
+    public int numeroAlugueresIn() {
         return alugueresI.size();
     }
-    public void adicionarAlugueresIn(Aluguer aluguer){
+
+    /**
+     * Permite adicionar um aluguer à lista de alugueres iniciados
+     *
+     * @param aluguer - contém toda a informação de aluguer
+     */
+    public void adicionarAlugueresIn(Aluguer aluguer) {
         alugueresI.add(aluguer);
     }
-    
-    public void removerAlugueresIn(Aluguer aluguer){
+
+    /**
+     * permite remover um aluguer da lista de alugueres Iniciados
+     *
+     * @param aluguer - contém toda a informação de aluguer
+     */
+    public void removerAlugueresIn(Aluguer aluguer) {
         alugueresI.remove(aluguer);
     }
-    
-    public String mostrarAlugueresIn (){
+
+    /**
+     *
+     * @return String com todos os alugueres no estado INICIADO
+     */
+    public String mostrarAlugueresIn() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < alugueresI.size(); i++) {
             str.append("\n").append(alugueresI.get(i));
         }
-        return str.toString();   
+        return str.toString();
     }
-    
-    public int numeroAlugueresCan(){
-       return alugueresC.size();
+
+    /**
+     *
+     * @return total de alugueres cancelados
+     */
+    public int numeroAlugueresCan() {
+        return alugueresC.size();
     }
-    public void adicionarAlugueresCan(Aluguer aluguer){
+
+    /**
+     * adiciona à lista de alugueres cancelados um novo aluguer
+     *
+     * @param aluguer - contém toda a informação de aluguer
+     */
+    public void adicionarAlugueresCan(Aluguer aluguer) {
         alugueresC.add(aluguer);
     }
-    
-    public void removerAlugueresCan(Aluguer aluguer){
-        alugueresC.remove(aluguer);
-    }
-    
-    public String mostrarAlugueresCan (){
+
+    /**
+     *
+     * @return String com todos os alugueres cancelados
+     */
+    public String mostrarAlugueresCan() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < alugueresC.size(); i++) {
             str.append("\n").append(alugueresC.get(i));
         }
-        return str.toString();   
+        return str.toString();
     }
-    
-    public int numeroAluguerester(){
-      return  alugueresT.size();
+
+    /**
+     *
+     * @return total de alugueres terminados
+     */
+    public int numeroAluguerester() {
+        return alugueresT.size();
     }
-    
-    public void adicionarAlugueresTer(Aluguer aluguer){
+
+    /**
+     * Permite adicionar um aluguer à lista de augueres terminados
+     *
+     * @param aluguer - contém toda a informação de aluguer
+     */
+    public void adicionarAlugueresTer(Aluguer aluguer) {
         alugueresT.add(aluguer);
     }
-    
-    public void removerAlugueresTer(Aluguer aluguer){
-        alugueresT.remove(aluguer);
-    }
-    
-    public String mostrarAlugueresTer (){
+
+    /**
+     *
+     * @return String com todos os alugueres terminados
+     */
+    public String mostrarAlugueresTer() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < alugueresT.size(); i++) {
             str.append("\n").append(alugueresT.get(i));
         }
-        return str.toString();    
+        return str.toString();
     }
-    
-    
-    public String mostrarAlugueresMes (int ano){
-        
-        
-        StringBuilder str = new StringBuilder("");
-       
-        str.append("Para o ano ").append(ano).append(" constam os seguintes dados: ");
 
-        
-        for (int i = 11; i>=0; i--) { 
-            str.append("\n\nMês ").append(i+1).append("\nNumero de alugueres : ").append(estatisticas.get(ano-2019).getNum_alugueres_mensal(i))
-                    .append("\nLucro : ").append(estatisticas.get(ano-2019).getLucro_mensal(i)).append("€");
-                
+    /**
+     *
+     * @param ano - ano à qual se pretende saber informações mensais
+     * @return String com todos os alugueres mensais de um determinado ano
+     */
+    public String mostrarAlugueresMes(int ano) {
+        StringBuilder str = new StringBuilder("");
+        str.append("Para o ano ").append(ano).append(" constam os seguintes dados: ");
+        for (int i = 11; i >= 0; i--) {
+            str.append("\n\nMês ").append(i + 1).append("\nNumero de alugueres : ").append(estatisticas.get(ano - 2019).getNum_alugueres_mensal(i))
+                    .append("\nLucro : ").append(estatisticas.get(ano - 2019).getLucro_mensal(i)).append("€");
         }
         return str.toString();
-    }    
-    
-    public void adicionarVeiculo (Veiculo veiculo){
-        veiculos.add(veiculo);    
     }
-    
-    //As validações sao feitas aqui ou na main?
-    public String monstrarVeiculos (){
+
+    /**
+     * Permite adicionar um veículo à lista de veículos
+     *
+     * @param veiculo - contem todas as informações do veículo
+     */
+    public void adicionarVeiculo(Veiculo veiculo) {
+        veiculos.add(veiculo);
+    }
+
+    /**
+     *
+     * @return String com todos os veículos inseridos
+     */
+    public String monstrarVeiculos() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < veiculos.size(); i++) {
             str.append(veiculos.get(i)).append("\n");
@@ -203,79 +268,133 @@ public class GestaoRentacar {
         return str.toString();
     }
 
-    public int pesquisarVeiculoPorMatricula (String matricula){
+    /**
+     *
+     * @param matricula
+     * @return posição no ArrayList de um determinado veículo
+     */
+    public int pesquisarVeiculoPorMatricula(String matricula) {
         for (int i = 0; i < veiculos.size(); i++) {
-                if(veiculos.get(i).getMatricula().equalsIgnoreCase(matricula)){
-                    return i;   
-            } 
+            if (veiculos.get(i).getMatricula().equalsIgnoreCase(matricula)) {
+                return i;
+            }
         }
         return -1;      //retorna -1 se não encontrar tipos coma  mesma designação
     }
-     
-    public Veiculo obterVeiculo (int pos){
+
+    /**
+     *
+     * @param pos
+     * @return Veículo de uma dada posição
+     */
+    public Veiculo obterVeiculo(int pos) {
         return veiculos.get(pos);
     }
-                
-    public int numeroVeiculos (){
+
+    /**
+     *
+     * @return total de veículos inseridos
+     */
+    public int numeroVeiculos() {
         return veiculos.size();
     }
-    public void adicionarTipoVeiculo (TipoVeiculo tipoveiculo){
-          tipoveiculo.setNumero(tiposdeveiculo.size()+1);
-          tiposdeveiculo.add(tipoveiculo);     
+
+    /**
+     * Permite adicionar um novo tipo de veículo ao ArrayList TipoDeVeículo
+     *
+     * @param tipoveiculo
+     */
+    public void adicionarTipoVeiculo(TipoVeiculo tipoveiculo) {
+        tipoveiculo.setNumero(tiposdeveiculo.size() + 1);
+        tiposdeveiculo.add(tipoveiculo);
     }
-    
-        public String monstrarNumVeiculosPorTipo (){
+
+    /**
+     *
+     * @return String com o número de veículos por tipo
+     */
+    public String monstrarNumVeiculosPorTipo() {
         StringBuilder str = new StringBuilder("");
         str.append("\n-------------------------------------------\n");
-            str.append("Tipo de veículo").append("\t\t").append("Número de veículos");
+        str.append("Tipo de veículo").append("\t\t").append("Número de veículos");
         for (int i = 0; i < tiposdeveiculo.size(); i++) {
             str.append("\n").append(tiposdeveiculo.get(i).getDesignacao()).append("\t\t").append(" - ").append("\t").append(tiposdeveiculo.get(i).numeroVeiculos());
         }
-            str.append("\n-------------------------------------------");
+        str.append("\n-------------------------------------------");
         return str.toString();
     }
-    
-    public String monstrarTipoVeiculos (){
+
+    /**
+     *
+     * @return String com Todos os tipos de veículos inseridos
+     */
+    public String monstrarTipoVeiculos() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < tiposdeveiculo.size(); i++) {
             str.append("\n").append(tiposdeveiculo.get(i));
         }
         return str.toString();
     }
-        public String monstrarDesignacaoTipoVeiculos (){
+
+    /**
+     *
+     * @return String com todas as designações de tipos de veículo
+     */
+    public String monstrarDesignacaoTipoVeiculos() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < tiposdeveiculo.size(); i++) {
             str.append("\n").append(tiposdeveiculo.get(i).getDesignacao());
         }
         return str.toString();
     }
-    
-    
-        public int pesquisarTipodeVeiculo (String designacao){
-            for (int i = 0; i < tiposdeveiculo.size(); i++) {
-                if(tiposdeveiculo.get(i).getDesignacao().equalsIgnoreCase(designacao))
-                    return i;   
+
+    /**
+     *
+     * @param designacao - designação do tipo de veículo
+     * @return posição no Arraylist do tipo de veículo
+     */
+    public int pesquisarTipodeVeiculo(String designacao) {
+        for (int i = 0; i < tiposdeveiculo.size(); i++) {
+            if (tiposdeveiculo.get(i).getDesignacao().equalsIgnoreCase(designacao)) {
+                return i;
             }
-            return -1;      //retorna -1 se não encontrar tipos coma  mesma designação
+        }
+        return -1;      //retorna -1 se não encontrar tipos coma  mesma designação
     }
 
-        
-
-    public TipoVeiculo obterTipoVeiculo (int pos){
+    /**
+     *
+     * @param pos
+     * @return tipo de veículo p«para a dada posição no ArrayList
+     */
+    public TipoVeiculo obterTipoVeiculo(int pos) {
         return tiposdeveiculo.get(pos);
     }
-                
-    public int numeroTiposVeiculo (){
+
+    /**
+     *
+     * @return total de tipos de veículo inseridos
+     */
+    public int numeroTiposVeiculo() {
         return tiposdeveiculo.size();
     }
-    
-    public void adicionarCondutores (Condutor condutor){
+
+    /**
+     * Permite adicionar um condutor ao ArrayList
+     *
+     * @param condutor
+     */
+    public void adicionarCondutores(Condutor condutor) {
         condutores.add(condutor);
         pessoas.add(condutor);
     }
-    
-    public String monstrarCondutores (){
-        
+
+    /**
+     *
+     * @return String com todas as informações de todos os condutores
+     */
+    public String monstrarCondutores() {
+
         StringBuilder str = new StringBuilder("");
         str.append("Lista de consutores: \n");
         for (int i = 0; i < condutores.size(); i++) {
@@ -284,60 +403,80 @@ public class GestaoRentacar {
                     .append("\nNIF:").append(condutores.get(i).getNIF());
         }
         return str.toString();
-        
+
     }
-        
-    public void pesquisarCondutorPorNome (){
-        
-    }
-    
-    /*
-    public void pesquisarCondutorPor (){
-        
-    }
-    public void pesquisarCondutorPor (){
-        
-    }
-*/
-    public Condutor obterCondutor (int pos){
+
+    /**
+     *
+     * @param pos
+     * @return condutor de uma dada posição no ArrayList
+     */
+    public Condutor obterCondutor(int pos) {
         return condutores.get(pos);
     }
-                
-            
-    public int pesquisarCondutorPorNIF (int NIF){
-        for (int i = 0; i < condutores.size(); i++) {
-                if(condutores.get(i).getNIF()==NIF)
-                    return i;   
-            }
-            return -1;      //retorna -1 se não encontrar tipos com o mesmo nif
-    }
-    
-        public int pesquisarPessoaPorNIF (int NIF){
-        for (int i = 0; i < pessoas.size(); i++) {
-                if(pessoas.get(i).getNIF()==NIF){
-                    return i;   
-                }
 
+    /**
+     *
+     * @param NIF
+     * @return Devolve a posição no ArrayList em função do NIF
+     */
+    public int pesquisarCondutorPorNIF(int NIF) {
+        for (int i = 0; i < condutores.size(); i++) {
+            if (condutores.get(i).getNIF() == NIF) {
+                return i;
             }
-            return -1;      //retorna -1 se não encontrar pessoas com o mesmo nif
-    }
-        public Pessoa obterPessoa (int pos){
-            return pessoas.get(pos);
         }
-    
-        
-                
-    public int numeroCondutores (){
+        return -1;      //retorna -1 se não encontrar tipos com o mesmo nif
+    }
+
+    /**
+     *
+     * @param NIF
+     * @return Devolve a posição no ArrayList em função do NIF
+     */
+    public int pesquisarPessoaPorNIF(int NIF) {
+        for (int i = 0; i < pessoas.size(); i++) {
+            if (pessoas.get(i).getNIF() == NIF) {
+                return i;
+            }
+
+        }
+        return -1;      //retorna -1 se não encontrar pessoas com o mesmo nif
+    }
+
+    /**
+     *
+     * @param pos
+     * @return Pessoa de uma dada posição do ArrayList
+     */
+    public Pessoa obterPessoa(int pos) {
+        return pessoas.get(pos);
+    }
+
+    /**
+     *
+     * @return total de condutores
+     */
+    public int numeroCondutores() {
         return condutores.size();
     }
-    public void adicionarFuncionario (Funcionario funcionario){
+
+    /**
+     * Permite adicionar um funcionário à lista de funcionários
+     *
+     * @param funcionario
+     */
+    public void adicionarFuncionario(Funcionario funcionario) {
         funcionarios.add(funcionario);
         pessoas.add(funcionario);
     }
-    
-    public String monstrarFuncionarios (){
+
+    /**
+     *
+     * @return String contendo informações de todos os funcionários
+     */
+    public String monstrarFuncionarios() {
         StringBuilder str = new StringBuilder("");
-        str.append("Lista de consutores: \n");
         for (int i = 0; i < funcionarios.size(); i++) {
             str.append("\n-------------------------------------\n")
                     .append("\nNome: ").append(funcionarios.get(i).getNome())
@@ -345,122 +484,169 @@ public class GestaoRentacar {
         }
         return str.toString();
     }
-        
-    public int pesquisarFuncionarioPorNIF (int NIF){
-         for (int i = 0; i < funcionarios.size(); i++) {
-                if(funcionarios.get(i).getNIF()==NIF){
-                    return i;  
-                }    
+
+    /**
+     *
+     * @param NIF
+     * @return posição no ArrayList para um determinado NIF
+     */
+    public int pesquisarFuncionarioPorNIF(int NIF) {
+        for (int i = 0; i < funcionarios.size(); i++) {
+            if (funcionarios.get(i).getNIF() == NIF) {
+                return i;
             }
-            return -1;      //retorna -1 se não encontrar pessoas com o mesmo nif
+        }
+        return -1;      //retorna -1 se não encontrar pessoas com o mesmo nif
     }
-            
-    public Funcionario obterFuncionario (int pos){
+
+    /**
+     *
+     * @param pos
+     * @return Devolve o funcionário de uma dada posição no ArrayList
+     */
+    public Funcionario obterFuncionario(int pos) {
         return funcionarios.get(pos);
     }
-                
-    public int numeroDeFuncionarios (){
-        return funcionarios.size();
-        
-    }
-    public void adicionarServico (){
-        
-    }
-    
-    public void monstrarServicos (){
-        
-    }
-        
-    public void pesquisarServicoPor (){
-        
-    }
-            
-    public void obterServicosPor (){
-        
-    }
-                
 
-    public void adicionarOpcao (Opcao op){
-        op.setNumero(opcoes.size()+1);
-        opcoes.add(op);
-        
+    /**
+     *
+     * @return total de funcionários
+     */
+    public int numeroDeFuncionarios() {
+        return funcionarios.size();
+
     }
-    
-    public String monstrarOpcoes (){
+
+    /**
+     * Permite adicionar um aopção de aluguer ao ArrayList
+     *
+     * @param op
+     */
+    public void adicionarOpcao(Opcao op) {
+        op.setNumero(opcoes.size() + 1);
+        opcoes.add(op);
+
+    }
+
+    /**
+     *
+     * @return String com todas as opções de aluguer
+     */
+    public String monstrarOpcoes() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < opcoes.size(); i++) {
             str.append(opcoes.get(i)).append("\n");
         }
         return str.toString();
     }
-        
-    public int pesquisarOpcaoPorNome (String nome){
+
+    /**
+     *
+     * @param nome - nome da opção de aluguer
+     * @return - posição no ArrayList de uma determinada opção
+     */
+    public int pesquisarOpcaoPorNome(String nome) {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < opcoes.size(); i++) {
-                if(opcoes.get(i).getNome().equalsIgnoreCase(nome))
-                    return i;   
+            if (opcoes.get(i).getNome().equalsIgnoreCase(nome)) {
+                return i;
             }
-            return -1;      //retorna -1 se não encontrar tipos coma  mesma designação
+        }
+        return -1;      //retorna -1 se não encontrar tipos coma  mesma designação
     }
-            
-    public Opcao obterOpcao (int pos){
+
+    /**
+     *
+     * @param pos
+     * @return Opção de uma determinada posição no ArrayList
+     */
+    public Opcao obterOpcao(int pos) {
         return opcoes.get(pos);
     }
-                
-    public int numeroDeOpcoes (){
+
+    /**
+     *
+     * @return total de opções de aluguer
+     */
+    public int numeroDeOpcoes() {
         return opcoes.size();
-        
+
     }
-    public void adicionarAluguer (Aluguer aluguer){
+
+    /**
+     * Permite adicionar um aluguer ao ArrayList de alugueres Atribui um numero.
+     * Unico e sequencial
+     *
+     * @param aluguer
+     */
+    public void adicionarAluguer(Aluguer aluguer) {
         alugueres.add(aluguer);
-        alugueres.get(numeroDeAlugueres()-1).setNumero(numeroDeAlugueres());
-        
+        alugueres.get(numeroDeAlugueres() - 1).setNumero(numeroDeAlugueres());
     }
-    public int numeroDeAlugueres (){
+
+    /**
+     *
+     * @return total de alugueres
+     */
+    public int numeroDeAlugueres() {
         return alugueres.size();
     }
-    
-    
-    public String monstrarAlugueres (){
+
+    /**
+     *
+     * @return String com todos os alugueres
+     */
+    public String monstrarAlugueres() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < alugueres.size(); i++) {
             str.append(alugueres.get(i)).append("\n");
         }
         return str.toString();
     }
-        
-    public void pesquisarAlugueres (){
-        
-    }
-            
-    public Aluguer obterAlugueres (int pos){
+
+    /**
+     *
+     * @param pos
+     * @return Aluger de uma determinada posição no ArrayList
+     */
+    public Aluguer obterAlugueres(int pos) {
         return alugueres.get(pos);
     }
-    
-        public void adicionarServico(Servico s){
+
+    /**
+     * Permite adicionar um serviço ao ArrayList Serviços Atribui um numero ao
+     * serviçi. Unico e sequencial
+     *
+     * @param s
+     */
+    public void adicionarServico(Servico s) {
         servicos.add(s);
-        servicos.get(numeroDeServicos()-1).setNumero(numeroDeServicos());
+        servicos.get(numeroDeServicos() - 1).setNumero(numeroDeServicos());
     }
-        public int numeroDeServicos (){
+
+    /**
+     *
+     * @return total de serviços
+     */
+    public int numeroDeServicos() {
         return servicos.size();
     }
 
-    
-    
-        public boolean verificaDisponibilidade(Calendar dataLevantamento, Calendar dataEntrega, Veiculo veiculo){
-            for (int i = 0; i < veiculo.numeroAlugueresRes(); i++) {
-                if (dataEntrega.after(veiculo.alugueresR.get(i).getDataHoraEntrega()) && dataEntrega.before(veiculo.alugueresR.get(i).getDataHoraLevantamento())){    //verifica se a data inserida esta no intervalo de qualquer aluguer
-                    return false;     
-                }
-                if (dataLevantamento.after(veiculo.alugueresR.get(i).getDataHoraEntrega()) && dataLevantamento.before(veiculo.alugueresR.get(i).getDataHoraLevantamento())){    //verifica se a data inserida esta no intervalo de qualquer aluguer
-                    return false;     
-                }
-                if(veiculo.alugueresR.get(i).getDataHoraEntrega().after(dataLevantamento) && veiculo.alugueresR.get(i).getDataHoraEntrega().before(dataEntrega) ){  //verifiva se existe algum aluguer entre as datas
-                   return false; 
-                } 
-            }    
-                   return true; 
+    public boolean verificaDisponibilidade(Calendar dataLevantamento, Calendar dataEntrega, Veiculo veiculo) {
+        for (int i = 0; i < veiculo.numeroAlugueresRes(); i++) {
+            if (dataEntrega.after(veiculo.alugueresR.get(i).getDataHoraEntrega()) && dataEntrega.before(veiculo.alugueresR.get(i).getDataHoraLevantamento())) {    //verifica se a data inserida esta no intervalo de qualquer aluguer
+                return false;
+            }
+            if (dataLevantamento.after(veiculo.alugueresR.get(i).getDataHoraEntrega()) && dataLevantamento.before(veiculo.alugueresR.get(i).getDataHoraLevantamento())) {    //verifica se a data inserida esta no intervalo de qualquer aluguer
+                return false;
+            }
+            if (veiculo.alugueresR.get(i).getDataHoraEntrega().after(dataLevantamento) && veiculo.alugueresR.get(i).getDataHoraEntrega().before(dataEntrega)) {  //verifiva se existe algum aluguer entre as datas
+                return false;
+            }
         }
+        return true;
+    }
+
     /*    
     public String mostraVeiculosDisponiveis(Calendar dataLevantamento, Calendar dataEntrega) {
         StringBuilder str = new StringBuilder("");
@@ -483,76 +669,37 @@ public class GestaoRentacar {
         }
     }
 
-    */
-        public long diferencaDias(Calendar dataIni, Calendar dataFim) {
+     */
+    /**
+     *
+     * @param dataIni - data inicial
+     * @param dataFim - data final
+     * @return devolve a diferença em dias entre as duas datas
+     */
+    public long diferencaDias(Calendar dataIni, Calendar dataFim) {
         long difDias = (dataFim.getTimeInMillis() - dataIni.getTimeInMillis()) / (24 * 60 * 60 * 1000);
 
         //System.out.println("Diferença dias: " + difDias);
         return difDias;
     }
 
-    public void diferencaMeses(Calendar dataIni, Calendar dataFim) {
-        int difMes = dataFim.get(Calendar.MONTH) - dataIni.get(Calendar.MONTH);
-        int difMesAno = ((dataFim.get(Calendar.YEAR) - dataIni.get(Calendar.YEAR)) * 12);
-        int total = difMesAno + difMes;
-        if (dataFim.get(Calendar.DATE) < dataIni.get(Calendar.DATE)) {
-            total--;
-        }
-        System.out.println("Diferença meses: " + total);
-
-    }
-
-    public void diferencaAnos(Calendar dataIni, Calendar dataFim) {
-        int difAnos = dataFim.get(Calendar.YEAR) - dataIni.get(Calendar.YEAR);
-        if (dataFim.get(Calendar.DAY_OF_YEAR) < dataIni.get(Calendar.DAY_OF_YEAR)) {
-            difAnos--;
-        }
-        System.out.println("Diferença anos: " + difAnos);
-
-    }
-    
-    public double percentagemReservasCanceladas(){
-        double percentagem; 
-        percentagem=((double)alugueresC.size()/alugueres.size())*100;
+    /**
+     *
+     * @return valor percentual de reservas canceladas
+     */
+    public double percentagemReservasCanceladas() {
+        double percentagem;
+        percentagem = ((double) alugueresC.size() / alugueres.size()) * 100;
         return percentagem;
     }
-    
-    /*
-    public String verificaDatas(Calendar dataLevantamento, Calendar dataEntrega) {
-        double dias, dias1, dias2, dias3;
-        StringBuilder str = new StringBuilder("");
-        
-        for (int j = 0; j < veiculos.size(); j++) {
-            Veiculo v = obterVeiculo(j);
-        for (int i = 0; i < v.numeroDeAlugueres(); i++) {
-            Aluguer a = v.obterAlugueres(i);
-            dias = diferencaDias(dataEntrega, a.getDataHoraLevantamento());     
-            dias1 = diferencaDias(dataEntrega, a.getDataHoraEntrega());
-            dias2 = diferencaDias(dataLevantamento, a.getDataHoraLevantamento());
-            dias3 = diferencaDias(dataLevantamento, a.getDataHoraEntrega());
 
-            if (dias > 0 && dias1 < 0) {        //Se verdadeiro, sifnifica que a data de entrega não esta compreendida entre a data de entrega e data de levantamento de um dado aluguer para o veículo
-                if (dias2 > 0 && dias3 < 0) {   //Se verdadeiro, sifnifica que a data de levantamento não esta compreendida entre a data de entrega e data de levantamento de um dado aluguer para o veículo
-                    System.out.println("o veiculo x não da");
-                } else {
-                    System.out.println("aqui nao da");
-                }
-            } else {
-                System.out.println("aqui não da");
-            }
-        }
-        str.append(str);
-       
-        
-        }
-        return str.toString();
-    }
-   */ 
-    
-        public void gravarFicheiro() {
+    /**
+     * função que permite guardar dados
+     */
+    public void gravarFicheiro() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("Dados.dat"));
-            
+
             out.writeObject(tiposdeveiculo);
             out.writeObject(veiculos);
             out.writeObject(condutores);
@@ -572,11 +719,13 @@ public class GestaoRentacar {
         }
     }
 
-
+    /**
+     * Função que permite ler dados
+     */
     public void lerFicheiro() {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("Dados.dat"));
-            
+
             tiposdeveiculo = (ArrayList<TipoVeiculo>) in.readObject();
             veiculos = (ArrayList<Veiculo>) in.readObject();
             condutores = (ArrayList<Condutor>) in.readObject();
@@ -590,7 +739,7 @@ public class GestaoRentacar {
             alugueresC = (ArrayList<Aluguer>) in.readObject();
             alugueresT = (ArrayList<Aluguer>) in.readObject();
             estatisticas = (ArrayList<Estatisticas>) in.readObject();
-            
+
             Aluguer.numAlugueres = alugueres.size();
             Condutor.numCondutores = condutores.size();
             Funcionario.numFuncionarios = funcionarios.size();
@@ -601,13 +750,12 @@ public class GestaoRentacar {
             Veiculo.numVeiculos = veiculos.size();
             VeiculoLigeiro.numVeiculosLigeiros = veiculosLigeiros.size();
             Estatisticas.num_anos = estatisticas.size();
-                    
-            
-          /*  Curso.numCursos = cursos.size();
+
+            /*  Curso.numCursos = cursos.size();
             Aluno.numAlunos = alunos.size();
             FuncionarioDocente.numDocentes = docentes.size();
             FuncionarioNaoDocente.numNaoDocentes = naoDocentes.size();
-*/
+             */
             in.close();
 
         } catch (IOException | ClassNotFoundException e) {
@@ -616,11 +764,4 @@ public class GestaoRentacar {
 
     }
 
-    private Object append(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-            
-           
-    
-    
 }

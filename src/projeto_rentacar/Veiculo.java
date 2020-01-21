@@ -9,19 +9,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * Classe que contém as caracteristicas de cada veículo
  *
- * @author 2181042
+ * @author 2181042/2172563
  */
-public class Veiculo implements Serializable{
+public class Veiculo implements Serializable {
+
     public static int numVeiculos;
     protected String matricula;
     protected int nºpessoas;
     protected TipoVeiculo tipoveiculo;
-    protected String combustivel;       
+    protected String combustivel;
     protected int n_quilometros;
     protected ArrayList<Aluguer> alugueres = new ArrayList<>();
     protected ArrayList<Aluguer> alugueresR = new ArrayList<>();
 
+    /**
+     *
+     * @param matricula - matricula do veículo
+     * @param nºpessoas - n de pessoas do veículo
+     * @param tipoveiculo - tipo de veiculo associado ao veículo
+     * @param combustivel - combistivel do veículo
+     * @param n_quilometros - nº de quilometros do veículo
+     */
     public Veiculo(String matricula, int nºpessoas, TipoVeiculo tipoveiculo, String combustivel, int n_quilometros) {
         this.matricula = matricula;
         this.nºpessoas = nºpessoas;
@@ -31,145 +41,157 @@ public class Veiculo implements Serializable{
         numVeiculos++;
     }
 
-    
-        public int numeroDeAlugueres (){
+    /**
+     *
+     * @return total de alugueres do veículo
+     */
+    public int numeroDeAlugueres() {
         return alugueres.size();
     }
-         public void adicionarAluguer (Aluguer aluguer){
+
+    /**
+     * permite associar um aluguer a este veículo
+     *
+     * @param aluguer
+     */
+    public void adicionarAluguer(Aluguer aluguer) {
         alugueres.add(aluguer);
-         }
-    
-    public String monstrarAlugueres (){
+    }
+
+    /**
+     *
+     * @return String contendo alugueres associados ao veículo
+     */
+    public String monstrarAlugueres() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < alugueres.size(); i++) {
             str.append(alugueres.get(i)).append("\n");
         }
         return str.toString();
     }
-        
-    public void pesquisarAlugueres (){
-        
-    }
-            
-    public Aluguer obterAlugueres (int pos){
+
+    /**
+     *
+     * @param pos
+     * @return devolve o aluguer de uma deter«minada posição no ArrayList
+     */
+    public Aluguer obterAlugueres(int pos) {
         return alugueres.get(pos);
     }
-    
-     public int numeroAlugueresRes(){
-       return alugueresR.size();
+
+    /**
+     *
+     * @return total de alugueres no estado Reservado
+     */
+    public int numeroAlugueresRes() {
+        return alugueresR.size();
     }
-    public void adicionarAlugueresRes(Aluguer aluguer){
+
+    /**
+     * permite adicionar um aluguer no estado reservado
+     *
+     * @param aluguer
+     */
+    public void adicionarAlugueresRes(Aluguer aluguer) {
         alugueresR.add(aluguer);
     }
-    
-    public void RemoverAlugueresRes(Aluguer aluguer){
+
+    /**
+     * Permite remover um aluguer do estado reservado
+     *
+     * @param aluguer
+     */
+    public void RemoverAlugueresRes(Aluguer aluguer) {
         alugueresR.remove(aluguer);
     }
-               
-        public String mostrarAlugueresRes (){
+
+    /**
+     *
+     * @return String contendo todos os alugueres no estado reservado para este
+     * Veículo
+     */
+    public String mostrarAlugueresRes() {
         StringBuilder str = new StringBuilder("");
         for (int i = 0; i < alugueresR.size(); i++) {
             str.append("\n").append(alugueresR.get(i));
         }
         return str.toString();
     }
-        public int pesquisarAlugueresRes (int numAluguer){
+
+    /**
+     *
+     * @param numAluguer
+     * @return posição no ArrayList de um determinado numero de aluguer
+     */
+    public int pesquisarAlugueresRes(int numAluguer) {
         for (int i = 0; i < alugueresR.size(); i++) {
-            if(alugueresR.get(i).getNumero()==numAluguer){
-                return i; 
+            if (alugueresR.get(i).getNumero() == numAluguer) {
+                return i;
             }
         }
         return -1;
     }
-        public Aluguer obterAlugueresRes (int pos){
+
+    /**
+     *
+     * @param pos
+     * @return Devolve o aluguer associado a uma determinada posição
+     */
+    public Aluguer obterAlugueresRes(int pos) {
         return alugueresR.get(pos);
     }
-    
-        
-        
-    
-    /**
-     * @return the matricula
-     */
+
     public String getMatricula() {
         return matricula;
     }
 
-    /**
-     * @param matricula the matricula to set
-     */
     public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 
-    /**
-     * @return the nºpessoas
-     */
     public int getNºpessoas() {
         return nºpessoas;
     }
 
-    /**
-     * @param nºpessoas the nºpessoas to set
-     */
     public void setNºpessoas(int nºpessoas) {
         this.nºpessoas = nºpessoas;
     }
 
-    /**
-     * @return the tipoveiculo
-     */
     public TipoVeiculo getTipoveiculo() {
         return tipoveiculo;
     }
 
-    /**
-     * @param tipoveiculo the tipoveiculo to set
-     */
     public void setTipoveiculo(TipoVeiculo tipoveiculo) {
         this.tipoveiculo = tipoveiculo;
     }
 
-    /**
-     * @return the combustivel
-     */
     public String getCombustivel() {
         return combustivel;
     }
 
-    /**
-     * @param combustivel the combustivel to set
-     */
     public void setCombustivel(String combustivel) {
         this.combustivel = combustivel;
     }
 
-    /**
-     * @return the n_quilometros
-     */
     public int getN_quilometros() {
         return n_quilometros;
     }
 
-    /**
-     * @param n_quilometros the n_quilometros to set
-     */
     public void setN_quilometros(int n_quilometros) {
         this.n_quilometros = n_quilometros;
     }
-    
-        
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("");
         str.append("\nMatrícula: ").append(matricula);
+        str.append("\nTipo: ").append(tipoveiculo.getDesignacao());
         str.append("\nNºpessoas: ").append(nºpessoas);
         str.append("\nCombustível: ").append(combustivel);
         str.append("\nNºquilómetros: ").append(n_quilometros);
-        
+
         return str.toString();
 
     }
-    
-    
+
 }

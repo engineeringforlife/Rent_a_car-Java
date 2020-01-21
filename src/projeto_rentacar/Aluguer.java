@@ -10,16 +10,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
+ * Classe Que contém todas as informações de um determinado aluguer
  *
- * @author 2181042
+ * @author 2181042/2172563
  */
 public class Aluguer implements Serializable {
+
     public static int numAlugueres;
-    
     private int numero;
-    private int estado=1;       
+    private int estado = 1;
     private String localLevantamento;
-    private String localEntrega;       
+    private String localEntrega;
     private Calendar dataHoraLevantamento;
     private Calendar dataHoraEntrega;
     private Condutor condutor;
@@ -27,9 +28,22 @@ public class Aluguer implements Serializable {
     private int numPessoas;
     private String carataristicas;
     private double preco;
-    
     private ArrayList<Opcao> opcoes = new ArrayList<>();
-    
+
+    /**
+     *
+     * @param localLevantamento - local de levantamento do aluguer
+     * @param localEntrega - local de entrega do aluguer
+     * @param dataHoraLevantamento - data e hora de levantamento do aluguer
+     * @param dataHoraEntrega - data e hora de entrega do aluguer
+     * @param condutor - contém todas as caracteristicas do contutor associado
+     * ao aluguer
+     * @param veiculo - contém todas as caracteristicas do veículo associado ao
+     * aluguer
+     * @param numPessoas - número de pessoas associadop a aluguer
+     * @param carataristicas * cacateristicas gerais do aluguer
+     * @param preco - preço do aluguer
+     */
 
     public Aluguer(String localLevantamento, String localEntrega, Calendar dataHoraLevantamento, Calendar dataHoraEntrega, Condutor condutor, Veiculo veiculo, int numPessoas, String carataristicas, double preco) {
         numAlugueres++;
@@ -42,175 +56,117 @@ public class Aluguer implements Serializable {
         this.numPessoas = numPessoas;
         this.carataristicas = carataristicas;
         this.preco = preco;
-        
-        
+
     }
 
-    
+    /**
+     * Permite adicionar uma opção de aluguer a este aluguer
+     *
+     * @param op - opção de aluguer
+     */
     public void adicionarOpcao(Opcao op) {
         opcoes.add(op);
     }
 
-    /**
-     * @return the numero
-     */
     public int getNumero() {
         return numero;
     }
 
-    /**
-     * @param numero the numero to set
-     */
     public void setNumero(int numero) {
         this.numero = numero;
     }
 
-    /**
-     * @return the estado
-     */
     public int getEstado() {
         return estado;
     }
 
-    /**
-     * @param estado the estado to set
-     */
     public void setEstado(int estado) {
         this.estado = estado;
     }
 
-    /**
-     * @return the localLevantamento
-     */
     public String getLocalLevantamento() {
         return localLevantamento;
     }
 
-    /**
-     * @param localLevantamento the localLevantamento to set
-     */
     public void setLocalLevantamento(String localLevantamento) {
         this.localLevantamento = localLevantamento;
     }
 
-    /**
-     * @return the localEntrega
-     */
     public String getLocalEntrega() {
         return localEntrega;
     }
 
-    /**
-     * @param localEntrega the localEntrega to set
-     */
     public void setLocalEntrega(String localEntrega) {
         this.localEntrega = localEntrega;
     }
 
-    /**
-     * @return the dataHoraLevantamento
-     */
     public Calendar getDataHoraLevantamento() {
         return dataHoraLevantamento;
     }
 
-    /**
-     * @param dataHoraLevantamento the dataHoraLevantamento to set
-     */
     public void setDataHoraLevantamento(Calendar dataHoraLevantamento) {
         this.dataHoraLevantamento = dataHoraLevantamento;
     }
 
-    /**
-     * @return the dataHoraEntrega
-     */
     public Calendar getDataHoraEntrega() {
         return dataHoraEntrega;
     }
 
-    /**
-     * @param dataHoraEntrega the dataHoraEntrega to set
-     */
     public void setDataHoraEntrega(Calendar dataHoraEntrega) {
         this.dataHoraEntrega = dataHoraEntrega;
     }
 
-    /**
-     * @return the condutor
-     */
     public Condutor getCondutor() {
         return condutor;
     }
 
-    /**
-     * @param condutor the condutor to set
-     */
     public void setCondutor(Condutor condutor) {
         this.condutor = condutor;
     }
 
-    /**
-     * @return the veiculo
-     */
     public Veiculo getVeiculo() {
         return veiculo;
     }
 
-    /**
-     * @param veiculo the veiculo to set
-     */
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
 
-    /**
-     * @return the numPessoas
-     */
     public int getNumPessoas() {
         return numPessoas;
     }
 
-    /**
-     * @param numPessoas the numPessoas to set
-     */
     public void setNumPessoas(int numPessoas) {
         this.numPessoas = numPessoas;
     }
 
-    /**
-     * @return the carataristicas
-     */
     public String getCarataristicas() {
         return carataristicas;
     }
 
-    /**
-     * @param carataristicas the carataristicas to set
-     */
     public void setCarataristicas(String carataristicas) {
         this.carataristicas = carataristicas;
     }
 
-    /**
-     * @return the preco
-     */
     public double getPreco() {
         return preco;
     }
 
-    /**
-     * @param preco the preco to set
-     */
     public void setPreco(double preco) {
         this.preco = preco;
     }
-    
-    public double precoOpcoes(){
-        double preco=0;
-         for (int i = 0; i < opcoes.size(); i++) {
-               preco+=opcoes.get(i).getPreco();   
-            }
-          return preco;
+
+    /**
+     * Calcula o preço das opções de aluguer
+     *
+     * @return Preço total das opções associadas ao aluguer
+     */
+    public double precoOpcoes() {
+        double preco = 0;
+        for (int i = 0; i < opcoes.size(); i++) {
+            preco += opcoes.get(i).getPreco();
+        }
+        return preco;
     }
 
     @Override
@@ -221,29 +177,16 @@ public class Aluguer implements Serializable {
         str.append("\nLocal e entrega: ").append(localEntrega);
         str.append("\nData e hora de levantamento: ").
                 append(dataHoraLevantamento.get(Calendar.DATE)).append("-").
-                append(dataHoraLevantamento.get(Calendar.MONTH)+1).append("-").
+                append(dataHoraLevantamento.get(Calendar.MONTH) + 1).append("-").
                 append(dataHoraLevantamento.get(Calendar.YEAR));
         str.append("\nData e hora de Entrega: ").
                 append(dataHoraEntrega.get(Calendar.DATE)).append("-").
-                append(dataHoraEntrega.get(Calendar.MONTH)+1).append("-").
+                append(dataHoraEntrega.get(Calendar.MONTH) + 1).append("-").
                 append(dataHoraEntrega.get(Calendar.YEAR));
         //str.append("\nCondutor: ").append(condutor);
         str.append("\nVeiculo: ").append(veiculo);
-        
+
         return str.toString();
     }
 
-
-    /**
-     * @return the opcoes
-     */
-
-    
-/*Adicionar metodos para Lista*/
-    
-    
-
-    
-    
-    
 }

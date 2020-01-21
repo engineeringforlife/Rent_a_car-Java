@@ -8,16 +8,25 @@ package projeto_rentacar;
 import java.io.Serializable;
 
 /**
+ * Superclasse de Funcionário e de Condutor.
  *
- * @author 2181042
+ * @author 2181042/2172563
  */
-public class Pessoa implements Serializable{
+public class Pessoa implements Serializable {
+
     public static int numPessoas;
     protected int NIF;
     protected String nome;
-    protected String morada;       
+    protected String morada;
     protected int telefone;
 
+    /**
+     *
+     * @param NIF - Nif da pessoa. Unico e identificativo
+     * @param nome - Nome da pessoa
+     * @param morada - Morada da pessoa
+     * @param telefone - Numero de telemovel da pessoa
+     */
     public Pessoa(int NIF, String nome, String morada, int telefone) {
         this.NIF = NIF;
         this.nome = nome;
@@ -26,75 +35,47 @@ public class Pessoa implements Serializable{
         numPessoas++;
     }
 
-    /**
-     * @return the NIF
-     */
     public int getNIF() {
         return NIF;
     }
 
-    /**
-     * @param NIF the NIF to set
-     */
     public void setNIF(int NIF) {
         this.NIF = NIF;
     }
 
-    /**
-     * @return the nome
-     */
     public String getNome() {
         return nome;
     }
 
-    /**
-     * @param nome the nome to set
-     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    /**
-     * @return the morada
-     */
     public String getMorada() {
         return morada;
     }
 
-    /**
-     * @param morada the morada to set
-     */
     public void setMorada(String morada) {
         this.morada = morada;
     }
 
-    /**
-     * @return the telefone
-     */
     public int getTelefone() {
         return telefone;
     }
 
-    /**
-     * @param telefone the telefone to set
-     */
     public void setTelefone(int telefone) {
         this.telefone = telefone;
     }
 
     @Override
     public String toString() {
-        StringBuilder str= new StringBuilder("");
+        StringBuilder str = new StringBuilder("");
         str.append("\nNome: ").append(nome);
         str.append("\nNIF: ").append(NIF);
         str.append("\nMorada: ").append(morada);
         str.append("\nTelefone: ").append(telefone);
         return str.toString();
     }
-    
-}
 
-    
-    
-            
+}
     
